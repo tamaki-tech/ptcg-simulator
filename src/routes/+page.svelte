@@ -1,8 +1,20 @@
-<script>
+<script lang="ts">
   import Counter from "./Counter.svelte";
   import welcome from "$lib/images/svelte-welcome.webp";
   import welcome_fallback from "$lib/images/svelte-welcome.png";
+  import type { ApiRoute } from "$lib/server";
   import { Alert } from "flowbite-svelte";
+  import { hc } from "hono/client";
+
+  const client = hc<ApiRoute>("/api");
+
+  const getHello = async () => {
+    const res = await client.hello.$get({ query: { name: "Hono" } });
+    const data = await res.json();
+    return data;
+  };
+
+  const helloPromise = getHello();
 </script>
 
 <svelte:head>
@@ -18,6 +30,13 @@
 </div>
 
 <section>
+  {#await helloPromise}
+    <p>Loading...</p>
+  {:then hello}
+    <p>{hello.message}</p>
+  {:catch error}
+    <p style="color: red">{error.message}</p>
+  {/await}
   <h1>
     <span class="welcome">
       <picture>
