@@ -3,6 +3,7 @@
   import welcome from "$lib/images/svelte-welcome.webp";
   import welcome_fallback from "$lib/images/svelte-welcome.png";
   import type { ApiRoute } from "$lib/server";
+  import { Alert } from "flowbite-svelte";
   import { hc } from "hono/client";
 
   const client = hc<ApiRoute>("/api");
@@ -20,6 +21,13 @@
   <title>Home</title>
   <meta name="description" content="Svelte demo app" />
 </svelte:head>
+
+<div class="p-8">
+  <Alert>
+    <span class="font-medium">Info alert!</span>
+    Change a few things up and try submitting again.
+  </Alert>
+</div>
 
 <section>
   {#await helloPromise}
