@@ -9,7 +9,7 @@
   const client = hc<ApiRoute>("/api");
 
   const getHello = async () => {
-    const res = await client.hello.$get({ query: { name: "Hono" } });
+    const res = await client.deck.search.$get({ query: { code: "test" } });
     const data = await res.json();
     return data;
   };
@@ -33,7 +33,7 @@
   {#await helloPromise}
     <p>Loading...</p>
   {:then hello}
-    <p>{hello.message}</p>
+    <p>{hello}</p>
   {:catch error}
     <p style="color: red">{error.message}</p>
   {/await}
