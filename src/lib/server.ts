@@ -4,35 +4,38 @@ import { z } from "zod";
 
 export const apiApp = new Hono();
 
-const bookApp = new Hono();
+const deckApp = new Hono();
 
-const bookRoute = bookApp.get("/all", (c) => {
-  return c.jsonT({
-    message: `All Books`,
-  });
-});
-
-const apiRoute = apiApp
-  .get(
-    "/hello",
-    zValidator(
-      "query",
-      z.object({
-        name: z.string(),
-      })
-    ),
-    (c) => {
-      const { name } = c.req.valid("query");
-      return c.jsonT({
-        message: `Hello! ${name}`,
-      });
-    }
-  )
-  .get("/currentDate", (c) => {
+const deckRoute = deckApp.get(
+  "/search",
+  zValidator(
+    "query",
+    z.object({
+      code: z.string(),
+    })
+  ),
+  (c) => {
     return c.jsonT({
-      datetime: new Date().toISOString(),
+      result: "OK",
+      code: "testCode",
+      deck: [
+        {
+          uuid: "da2e0de6-6154-fecb-fd3d-d3b6f04e7e92",
+          url: "https://www.pokemon-card.com/assets/images/card_images/large/SV6/045707_P_OGAPONMIDORINOMENEX.jpg",
+        },
+        {
+          uuid: "f5088562-69f0-f8cf-f056-e617f5403b7b",
+          url: "https://www.pokemon-card.com/assets/images/card_images/large/SV6/045707_P_OGAPONMIDORINOMENEX.jpg",
+        },
+        {
+          uuid: "5970f7af-c335-e837-a9f4-f07c936d2d56",
+          url: "https://www.pokemon-card.com/assets/images/card_images/large/SV5K/045199_P_TAKERURAIKOEX.jpg",
+        },
+      ],
     });
-  })
-  .route("/book", bookRoute);
+  }
+);
+
+const apiRoute = apiApp.route("/deck", deckRoute);
 
 export type ApiRoute = typeof apiRoute;
