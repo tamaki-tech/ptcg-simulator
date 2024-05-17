@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
+import type { DeckSearchResponse } from "./type";
 
 export const apiApp = new Hono();
 
@@ -15,7 +16,7 @@ const deckRoute = deckApp.get(
     })
   ),
   (c) => {
-    return c.jsonT({
+    const response: DeckSearchResponse = {
       result: "OK",
       code: "testCode",
       deck: [
@@ -32,7 +33,8 @@ const deckRoute = deckApp.get(
           url: "https://www.pokemon-card.com/assets/images/card_images/large/SV5K/045199_P_TAKERURAIKOEX.jpg",
         },
       ],
-    });
+    };
+    return c.jsonT(response);
   }
 );
 
