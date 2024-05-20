@@ -3,9 +3,12 @@
 
   export let item: { src: string; alt?: string };
   export let isReverse = false;
+  export let opacity = true;
 </script>
 
-<div class="cursor-pointer hover:opacity-80 transition-opacity">
+<div
+  class="cursor-pointer transition-opacity {opacity ? 'hover:opacity-80' : ''}"
+>
   {#if isReverse}
     <img src={pokeUraImg} alt="pokeUraImage" class="h-auto max-w-full" />
   {:else}

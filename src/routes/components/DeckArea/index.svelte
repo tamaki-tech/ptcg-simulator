@@ -7,16 +7,15 @@
   export let deckArea: DeckAreaMachineType | undefined;
 
   let openDeckListModal = false;
-  let openDeckTopListModal = false;
 
   $: deck = $deckArea?.context.deck;
 </script>
 
 {#if $deckArea?.value === "ready"}
   <CardListModal
+    {deck}
     title={`Deck Card List (${deck?.cards.length})`}
     bind:openModal={openDeckListModal}
-    {deck}
   />
 
   <Card padding="xl">
@@ -26,15 +25,21 @@
     <div>
       <img
         alt="poke_ura"
-        class="cursor-pointer hover:opacity-80 transition-opacity"
+        role="none"
+        class="cursor-pointer hover:opacity-80 transition-opacity object-contain h-36 w-full"
         src={pokeUraImg}
+        on:click={() => deckArea?.send("dealCards")}
       />
     </div>
 
     <!-- Menuの位置を検討する -->
     <div class="py-4">
       <div class="py-1">
-        <Button class="w-full">shuffle</Button>
+        <Button
+          class="w-full"
+          on:click={() => deckArea?.send({ type: "shuffleDeck" })}
+          >shuffle</Button
+        >
       </div>
       <div class="py-1">
         <Button class="w-full py-2">flip deck top</Button>

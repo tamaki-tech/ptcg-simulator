@@ -8,14 +8,16 @@
   export let title: string;
   export let deck: Deck | undefined;
 
-  $: items = deck?.cards.map((c) => {
-    return { src: c.url, alt: c.uuid };
-  });
+  $: items = deck?.cards
+    .map((c) => {
+      return { src: c.url, alt: c.uuid };
+    })
+    .reverse();
 </script>
 
 <Modal {title} bind:open={openModal} size="lg" autoclose>
   <Gallery class="gap-4 grid-cols-7" {items} let:item>
-    <div class="p-1 cursor-pointer">
+    <div class="cursor-pointer">
       <PokemonCard {item} />
     </div>
   </Gallery>
