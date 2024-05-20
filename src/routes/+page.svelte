@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { Alert } from "flowbite-svelte";
   import { useMachine } from "@xstate/svelte";
-  import { PtcgSimulatorMachine } from "./machines";
+  import { PtcgSimulatorMachine } from "./ptcgSimulatorMachine";
   import DeckCodeModal from "./components/DeckCodeModal.svelte";
+  import DeckArea from "./components/DeckArea/index.svelte";
 
   const { send, state } = useMachine(PtcgSimulatorMachine);
+
+  $: deckArea = $state.context.deckArea;
 </script>
 
 {#if $state.value !== "ready"}
@@ -14,13 +16,6 @@
   />
 {/if}
 
-<div class="p-8">
-  <Alert>
-    <span class="font-medium">Info alert!</span>
-    Change a few things up and try submitting again.
-  </Alert>
-</div>
-
 <section class="flex flex-col justify-center items-center flex-1">
-  <p>ツールエリア</p>
+  <DeckArea {deckArea} />
 </section>

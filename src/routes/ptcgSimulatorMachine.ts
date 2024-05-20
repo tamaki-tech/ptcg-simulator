@@ -1,10 +1,14 @@
 import type { Deck, DeckSearchResponse } from "$lib/type";
-import { assign, createMachine } from "xstate";
+import { assign, createMachine, spawn } from "xstate";
 import { client } from "$lib/apiClient";
+import {
+  deckAreaMachine,
+  type DeckAreaMachineType,
+} from "./machines/deckAreaMachine";
 
 interface Context {
   code: string;
-  deck: Deck;
+  deckArea: DeckAreaMachineType;
 }
 
 type Event =
@@ -22,9 +26,9 @@ export const PtcgSimulatorMachine = createMachine(
       context: {} as Context,
       events: {} as Event,
     },
-    initial: "waitingForCode",
+    initial: "waitForSearchDeck",
     states: {
-      waitingForCode: {
+      waitForSearchDeck: {
         on: {
           searchDeck: "searchingDeck",
         },
@@ -35,9 +39,9 @@ export const PtcgSimulatorMachine = createMachine(
           src: "serchDeck",
           onDone: {
             target: "ready",
-            actions: "assignContext",
+            actions: "spawnMachines",
           },
-          onError: "waitingForCode",
+          onError: "waitForSearchDeck",
         },
       },
       ready: {},
@@ -46,11 +50,11 @@ export const PtcgSimulatorMachine = createMachine(
   {
     guards: {},
     actions: {
-      assignContext: assign({
-        deck: ({ deck }, evt) => {
+      spawnMachines: assign({
+        deckArea: ({ deckArea }, evt) => {
           if (evt.type !== "done.invoke.simulator.searchingDeck:invocation[0]")
-            return deck;
-          return evt.data;
+            return deckArea;
+          return spawn(deckAreaMachine({ deck: evt.data }));
         },
       }),
     },

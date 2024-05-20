@@ -5,7 +5,7 @@ export interface Card {
 
 export interface Deck {
   code: string;
-  deck: Card[];
+  cards: Card[];
 }
 
 export interface DeckSearchResponse extends Deck {
