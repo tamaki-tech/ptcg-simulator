@@ -5,12 +5,14 @@
   import DeckArea from "./components/DeckArea/index.svelte";
   import HandsArea from "./components/HandsArea/index.svelte";
   import SideArea from "./components/SideArea/index.svelte";
+  import BenchArea from "./components/BenchArea/index.svelte";
 
   const { send, state } = useMachine(PtcgSimulatorMachine);
 
   $: deckArea = $state.context.deckArea;
   $: handArea = $state.context.handArea;
   $: sideArea = $state.context.sideArea;
+  $: benchAreas = $state.context.benchAreas;
 </script>
 
 {#if $state.value !== "ready"}
@@ -19,15 +21,20 @@
     on:click={(e) => send({ type: "searchDeck", code: e.detail })}
   />
 {:else}
-  <section class="flex justify-center items-center flex-1 h-screen">
-    <div class="grid grid-cols-4">
-      <div class="col-span-1 p-4">
+  <section class="justify-center items-center flex-1 h-screen max-h-screen">
+    <div class="grid grid-rows-[280px_auto_auto] grid-cols-5">
+      {#each benchAreas as benchArea, index}
+        <div class="flex row-span-1 col-span-1 p-2">
+          <BenchArea pokemonArea={benchArea} {index} />
+        </div>
+      {/each}
+      <div class="flex row-span-2 col-span-1 p-2">
         <SideArea {sideArea} />
       </div>
-      <div class="col-span-2 p-4">
+      <div class="row-span-2 col-span-3 p-2">
         <HandsArea {handArea} />
       </div>
-      <div class="col-span-1 p-4">
+      <div class="flex row-span-2 col-span-1 p-2">
         <DeckArea {deckArea} />
       </div>
     </div>
