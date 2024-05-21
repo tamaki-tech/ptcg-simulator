@@ -1,24 +1,24 @@
 import type { Card, DeckSearchResponse } from "$lib/type";
 import { assign, createMachine, spawn } from "xstate";
 import { client } from "$lib/apiClient";
-import {
-  deckAreaMachine,
-  type DeckAreaMachineType,
-} from "./machines/deckAreaMachine";
+import { deckAreaMachine, type DeckAreaMachineType } from "./deckAreaMachine";
 import {
   handsAreaMachine,
   type HandsAreaMachineType,
-} from "./machines/handsAreaMachine";
+} from "./handsAreaMachine";
+import { sideAreaMachine, type SideAreaMachineType } from "./sideAreaMachine";
 
 interface Context {
   code: string;
   deckArea: DeckAreaMachineType;
   handArea: HandsAreaMachineType;
+  sideArea: SideAreaMachineType;
 }
 
 type Event =
   | { type: "searchDeck"; code: string }
   | { type: "sendCardToHands"; data: Card[] }
+  | { type: "sendCardToSide"; data: Card[] }
   | {
       type: "done.invoke.simulator.searchingDeck:invocation[0]";
       data: DeckSearchResponse;
@@ -45,7 +45,12 @@ export const PtcgSimulatorMachine = createMachine(
           src: "serchDeck",
           onDone: {
             target: "ready",
-            actions: ["spawnMachines", "shuffleDeck", "dealFullHands"],
+            actions: [
+              "spawnMachines",
+              "shuffleDeck",
+              "dealFullHands",
+              "spawnSideAreaMachine",
+            ],
           },
           onError: "waitForSearchDeck",
         },
@@ -58,6 +63,12 @@ export const PtcgSimulatorMachine = createMachine(
               ctx.handArea.send({ type: "dealCards", data: evt.data });
             },
           },
+          sendCardToSide: {
+            actions: (ctx, evt) => {
+              if (evt.type !== "sendCardToSide") return ctx;
+              ctx.sideArea.send({ type: "dealCards", data: evt.data });
+            },
+          },
         },
       },
     },
@@ -66,6 +77,7 @@ export const PtcgSimulatorMachine = createMachine(
     actions: {
       spawnMachines: assign({
         handArea: () => spawn(handsAreaMachine()),
+        sideArea: () => spawn(sideAreaMachine()),
         deckArea: ({ deckArea }, evt) => {
           if (evt.type !== "done.invoke.simulator.searchingDeck:invocation[0]")
             return deckArea;
@@ -79,6 +91,10 @@ export const PtcgSimulatorMachine = createMachine(
 
       dealFullHands: ({ deckArea }) => {
         deckArea.send({ type: "dealCards", quantity: 7 });
+      },
+
+      spawnSideAreaMachine: ({ deckArea }) => {
+        deckArea.send({ type: "dealSideCards", quantity: 6 });
       },
     },
     services: {

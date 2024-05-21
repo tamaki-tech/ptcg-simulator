@@ -8,6 +8,7 @@ interface Context {
 
 type Events =
   | { type: "dealCards"; quantity?: number }
+  | { type: "dealSideCards"; quantity?: number }
   | { type: "shuffleDeck" };
 
 const shuffleArray = (array: any) => {
@@ -38,6 +39,12 @@ export const deckAreaMachine = (context: Context) =>
           dealCards: {
             actions: sendParent(({ deck }, { quantity }) => ({
               type: "sendCardToHands",
+              data: deck.cards.splice(-(quantity ?? 1)),
+            })),
+          },
+          dealSideCards: {
+            actions: sendParent(({ deck }, { quantity }) => ({
+              type: "sendCardToSide",
               data: deck.cards.splice(-(quantity ?? 1)),
             })),
           },

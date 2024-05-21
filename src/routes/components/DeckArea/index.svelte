@@ -18,8 +18,8 @@
     bind:openModal={openDeckListModal}
   />
 
-  <Card padding="xl">
-    <h5 class="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
+  <Card padding="lg">
+    <h5 class="mb-4 text-lg font-medium text-gray-500 dark:text-gray-400">
       Deck ({deck?.cards.length})
     </h5>
     <div>
@@ -36,17 +36,18 @@
     <div class="py-4">
       <div class="py-1">
         <Button
-          class="w-full"
+          class="w-full p-2"
           on:click={() => deckArea?.send({ type: "shuffleDeck" })}
-          >shuffle</Button
         >
+          shuffle
+        </Button>
       </div>
       <div class="py-1">
         <Button class="w-full py-2">flip deck top</Button>
       </div>
       <div class="py-1">
         <Button class="w-full py-2" on:click={() => (openDeckListModal = true)}>
-          show deck card list
+          show card list
         </Button>
       </div>
     </div>
