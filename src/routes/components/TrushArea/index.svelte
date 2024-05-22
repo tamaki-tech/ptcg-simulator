@@ -16,7 +16,7 @@
 </script>
 
 <Card size="md" padding="md">
-  <h5 class="mb-4 text-lg font-medium text-gray-500 dark:text-gray-400">
+  <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
     Trush ({cards.length})
   </h5>
   <DragAndDropSection
