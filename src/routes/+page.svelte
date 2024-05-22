@@ -1,11 +1,11 @@
 <script lang="ts">
   import { useMachine } from "@xstate/svelte";
-  import { PtcgSimulatorMachine } from "./machines/index";
-  import DeckCodeModal from "./components/DeckCodeModal.svelte";
+  import BenchArea from "./components/BenchArea/index.svelte";
   import DeckArea from "./components/DeckArea/index.svelte";
+  import DeckCodeModal from "./components/DeckCodeModal.svelte";
   import HandsArea from "./components/HandsArea/index.svelte";
   import SideArea from "./components/SideArea/index.svelte";
-  import BenchArea from "./components/BenchArea/index.svelte";
+  import { PtcgSimulatorMachine } from "./machines/index";
 
   const { send, state } = useMachine(PtcgSimulatorMachine);
 

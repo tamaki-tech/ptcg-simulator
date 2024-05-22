@@ -1,9 +1,9 @@
 <script lang="ts">
   import { Card } from "flowbite-svelte";
+  import { dndzone } from "svelte-dnd-action";
+  import { flip } from "svelte/animate";
   import type { HandsAreaMachineType } from "../../machines/handsAreaMachine";
   import PokemonCard from "../PokemonCard.svelte";
-  import { flip } from "svelte/animate";
-  import { dndzone } from "svelte-dnd-action";
 
   export let handArea: HandsAreaMachineType;
 
