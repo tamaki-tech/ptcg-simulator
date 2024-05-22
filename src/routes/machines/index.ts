@@ -60,7 +60,7 @@ export const PtcgSimulatorMachine = createMachine(
               "spawnMachines",
               "shuffleDeck",
               "dealFullHands",
-              "spawnSideAreaMachine",
+              "dealSideCards",
             ],
           },
           onError: "waitForSearchDeck",
@@ -115,7 +115,7 @@ export const PtcgSimulatorMachine = createMachine(
       dealFullHands: ({ deckArea }) => {
         deckArea.send({ type: "dealCards", quantity: 7 });
       },
-      spawnSideAreaMachine: ({ deckArea }) => {
+      dealSideCards: ({ deckArea }) => {
         deckArea.send({ type: "dealSideCards", quantity: 6 });
       },
     },
