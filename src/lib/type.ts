@@ -1,5 +1,5 @@
 export interface Card {
-  uuid: string;
+  id: string;
   url: string;
 }
 

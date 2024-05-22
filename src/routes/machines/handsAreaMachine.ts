@@ -5,7 +5,9 @@ interface Context {
   cards: Card[];
 }
 
-type Events = { type: "dealCards"; data: Card[] };
+type Events =
+  | { type: "dealCards"; data: Card[] }
+  | { type: "assignCards"; data: Card[] };
 
 export const handsAreaMachine = () =>
   createMachine({
@@ -25,6 +27,11 @@ export const handsAreaMachine = () =>
           dealCards: {
             actions: assign({
               cards: ({ cards }, evt) => [...cards, ...evt.data],
+            }),
+          },
+          assignCards: {
+            actions: assign({
+              cards: (_, evt) => evt.data,
             }),
           },
         },

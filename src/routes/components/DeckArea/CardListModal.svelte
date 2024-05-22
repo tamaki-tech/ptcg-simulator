@@ -10,7 +10,7 @@
 
   $: items = deck?.cards
     .map((c) => {
-      return { src: c.url, alt: c.uuid };
+      return { src: c.url, alt: c.id };
     })
     .reverse();
 </script>
