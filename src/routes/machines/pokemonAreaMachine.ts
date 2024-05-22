@@ -1,9 +1,12 @@
 import type { Card } from "$lib/type";
-import { createMachine, type ActorRefFrom } from "xstate";
+import { assign, createMachine, type ActorRefFrom } from "xstate";
 
 interface Context {
-  cards?: Card[];
+  cards: Card[];
+  damage: number;
 }
+
+type Events = { type: "assignCards"; data: Card[] };
 
 export const pokemonAreaMachine = () =>
   createMachine({
@@ -11,13 +14,23 @@ export const pokemonAreaMachine = () =>
     predictableActionArguments: true,
     schema: {
       context: {} as Context,
+      events: {} as Events,
     },
     context: {
       cards: [],
+      damage: 0,
     },
     initial: "ready",
     states: {
-      ready: {},
+      ready: {
+        on: {
+          assignCards: {
+            actions: assign({
+              cards: (_, evt) => evt.data,
+            }),
+          },
+        },
+      },
     },
   });
 

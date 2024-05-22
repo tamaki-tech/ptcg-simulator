@@ -19,8 +19,8 @@
   };
 </script>
 
-<Card size="xs" padding="lg">
-  <h5 class="mb-4 text-lg font-medium text-gray-500 dark:text-gray-400">
+<Card size="xs" padding="xs">
+  <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
     Side ({$sideArea?.context?.cards?.length})
   </h5>
   <DragAndDropSection
