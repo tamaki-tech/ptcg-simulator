@@ -5,7 +5,9 @@ interface Context {
   cards: Card[];
 }
 
-type Events = { type: "assignCards"; data: Card[] };
+type Events =
+  | { type: "dealCards"; data: Card }
+  | { type: "assignCards"; data: Card[] };
 
 export const trushAreaMachine = () =>
   createMachine({
@@ -22,6 +24,11 @@ export const trushAreaMachine = () =>
     states: {
       ready: {
         on: {
+          dealCards: {
+            actions: assign({
+              cards: ({ cards }, evt) => [...cards, evt.data],
+            }),
+          },
           assignCards: {
             actions: assign({
               cards: (_, evt) => evt.data,

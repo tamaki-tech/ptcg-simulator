@@ -29,6 +29,7 @@ type Event =
   | { type: "searchDeck"; code: string }
   | { type: "sendCardToHands"; data: Card[] }
   | { type: "sendCardToSide"; data: Card[] }
+  | { type: "sendCardToTrush"; data: Card }
   | {
       type: "done.invoke.simulator.searchingDeck:invocation[0]";
       data: DeckSearchResponse;
@@ -79,6 +80,12 @@ export const PtcgSimulatorMachine = createMachine(
               ctx.sideArea.send({ type: "dealCards", data: evt.data });
             },
           },
+          sendCardToTrush: {
+            actions: (ctx, evt) => {
+              if (evt.type !== "sendCardToTrush") return ctx;
+              ctx.trushArea.send({ type: "dealCards", data: evt.data });
+            },
+          },
         },
       },
     },
@@ -108,7 +115,6 @@ export const PtcgSimulatorMachine = createMachine(
       dealFullHands: ({ deckArea }) => {
         deckArea.send({ type: "dealCards", quantity: 7 });
       },
-
       spawnSideAreaMachine: ({ deckArea }) => {
         deckArea.send({ type: "dealSideCards", quantity: 6 });
       },

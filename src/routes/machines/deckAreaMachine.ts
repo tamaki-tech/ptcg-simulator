@@ -9,7 +9,8 @@ interface Context {
 type Events =
   | { type: "dealCards"; quantity?: number }
   | { type: "dealSideCards"; quantity?: number }
-  | { type: "shuffleDeck" };
+  | { type: "shuffleDeck" }
+  | { type: "trushCard" };
 
 const shuffleArray = (array: any) => {
   const cloneArray = [...array];
@@ -54,6 +55,12 @@ export const deckAreaMachine = (context: Context) =>
                 return { ...deck, cards: shuffleArray(deck.cards) };
               },
             }),
+          },
+          trushCard: {
+            actions: sendParent(({ deck }) => ({
+              type: "sendCardToTrush",
+              data: deck.cards.pop(),
+            })),
           },
         },
       },

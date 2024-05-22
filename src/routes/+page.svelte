@@ -34,7 +34,7 @@
         <SideArea {sideArea} />
       </div>
       <div class="row-span-2 col-span-3">
-        <div class="p-2">
+        <div class="flex p-2">
           <HandsArea {handArea} />
         </div>
         <div class="p-2">

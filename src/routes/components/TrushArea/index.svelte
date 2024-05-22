@@ -10,11 +10,9 @@
   $: cards = $trushArea?.context.cards;
 
   const handleconsider = (e: any) => {
-    console.log("consider trush");
     trushArea.send({ type: "assignCards", data: e.detail.items });
   };
   const handleFinalize = (e: any) => {
-    console.log("finalize trush");
     trushArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
@@ -23,10 +21,10 @@
   <h5 class="mb-4 text-lg font-medium text-gray-500 dark:text-gray-400">
     Trush ({cards.length})
   </h5>
-  <!-- TODO dndzoneを共通化できるか検討する　-->
   <section
-    class="grid grid-cols-12 px-8 w-full"
-    use:dndzone={{ items: cards, flipDurationMs: 100 }}
+    class="grid grid-cols-12 px-8 w-full h-full"
+    style="min-height: 96px;"
+    use:dndzone={{ items: cards, flipDurationMs: 100, dropTargetStyle: {} }}
     on:consider={handleconsider}
     on:finalize={handleFinalize}
   >

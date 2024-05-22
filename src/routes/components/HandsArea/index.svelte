@@ -9,7 +9,10 @@
 
   $: cards = $handArea.context.cards;
 
-  const handleCardsSort = (e: any) => {
+  const handleconsider = (e: any) => {
+    handArea.send({ type: "assignCards", data: e.detail.items });
+  };
+  const handleFinalize = (e: any) => {
     handArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
@@ -18,12 +21,13 @@
   <h5 class="mb-4 text-lg font-medium text-gray-500 dark:text-gray-400">
     Hand ({cards.length})
   </h5>
-  <!-- TODO dndzoneを共通化できるか検討する　-->
+  <!-- TODO 共通化 -->
   <section
     class="grid grid-cols-12 px-8 w-full"
+    style="min-height: 96px;"
     use:dndzone={{ items: cards, flipDurationMs: 100, dropTargetStyle: {} }}
-    on:consider={handleCardsSort}
-    on:finalize={handleCardsSort}
+    on:consider={handleconsider}
+    on:finalize={handleFinalize}
   >
     {#each cards ?? [] as card (card.id)}
       <div class="-mx-4 -my-0" animate:flip={{ duration: 100 }}>
