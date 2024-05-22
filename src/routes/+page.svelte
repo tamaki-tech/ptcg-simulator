@@ -24,7 +24,7 @@
   />
 {:else}
   <section class="justify-center items-center flex-1 h-screen max-h-screen">
-    <div class="grid grid-rows-[auto_auto_auto] grid-cols-5">
+    <div class="grid grid-rows-[280px_auto_auto] grid-cols-5">
       {#each benchAreas as benchArea, index}
         <div class="flex row-span-1 col-span-1 p-2">
           <BenchArea pokemonArea={benchArea} {index} />

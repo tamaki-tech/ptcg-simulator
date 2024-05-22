@@ -19,7 +19,7 @@
   />
 
   <Card padding="lg">
-    <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+    <h5 class="mb-4 text-lg font-medium text-gray-500 dark:text-gray-400">
       Deck ({deck?.cards.length})
     </h5>
     <div>
