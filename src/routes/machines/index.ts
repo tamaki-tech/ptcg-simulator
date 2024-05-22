@@ -7,12 +7,17 @@ import {
   type HandsAreaMachineType,
 } from "./handsAreaMachine";
 import { sideAreaMachine, type SideAreaMachineType } from "./sideAreaMachine";
+import {
+  pokemonAreaMachine,
+  type PokemonAreaMachineType,
+} from "./pokemonAreaMachine";
 
 interface Context {
   code: string;
   deckArea: DeckAreaMachineType;
   handArea: HandsAreaMachineType;
   sideArea: SideAreaMachineType;
+  benchAreas: PokemonAreaMachineType[];
 }
 
 type Event =
@@ -78,6 +83,11 @@ export const PtcgSimulatorMachine = createMachine(
       spawnMachines: assign({
         handArea: () => spawn(handsAreaMachine()),
         sideArea: () => spawn(sideAreaMachine()),
+        benchAreas: () => {
+          return Array.from({ length: 5 }, (_, _i) =>
+            spawn(pokemonAreaMachine())
+          );
+        },
         deckArea: ({ deckArea }, evt) => {
           if (evt.type !== "done.invoke.simulator.searchingDeck:invocation[0]")
             return deckArea;

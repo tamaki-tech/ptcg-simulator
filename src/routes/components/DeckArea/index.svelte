@@ -36,6 +36,7 @@
     <div class="py-4">
       <div class="py-1">
         <Button
+          size="xs"
           class="w-full p-2"
           on:click={() => deckArea?.send({ type: "shuffleDeck" })}
         >
@@ -43,10 +44,14 @@
         </Button>
       </div>
       <div class="py-1">
-        <Button class="w-full py-2">flip deck top</Button>
+        <Button size="xs" class="w-full py-2">flip deck top</Button>
       </div>
       <div class="py-1">
-        <Button class="w-full py-2" on:click={() => (openDeckListModal = true)}>
+        <Button
+          size="xs"
+          class="w-full py-2"
+          on:click={() => (openDeckListModal = true)}
+        >
           show card list
         </Button>
       </div>
