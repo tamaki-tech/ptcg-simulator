@@ -5,6 +5,7 @@
   import DeckCodeModal from "./components/DeckCodeModal.svelte";
   import HandsArea from "./components/HandsArea/index.svelte";
   import SideArea from "./components/SideArea/index.svelte";
+  import TrushArea from "./components/TrushArea/index.svelte";
   import { PtcgSimulatorMachine } from "./machines/index";
 
   const { send, state } = useMachine(PtcgSimulatorMachine);
@@ -13,6 +14,7 @@
   $: handArea = $state.context.handArea;
   $: sideArea = $state.context.sideArea;
   $: benchAreas = $state.context.benchAreas;
+  $: trushArea = $state.context.trushArea;
 </script>
 
 {#if $state.value !== "ready"}
@@ -31,8 +33,13 @@
       <div class="flex row-span-2 col-span-1 p-2">
         <SideArea {sideArea} />
       </div>
-      <div class="row-span-2 col-span-3 p-2">
-        <HandsArea {handArea} />
+      <div class="row-span-2 col-span-3">
+        <div class="p-2">
+          <HandsArea {handArea} />
+        </div>
+        <div class="p-2">
+          <TrushArea {trushArea} />
+        </div>
       </div>
       <div class="flex row-span-2 col-span-1 p-2">
         <DeckArea {deckArea} />

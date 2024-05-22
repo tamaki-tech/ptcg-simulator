@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { Card } from "flowbite-svelte";
+  import { Card, Toggle } from "flowbite-svelte";
   import type { SideAreaMachineType } from "../../machines/sideAreaMachine";
   import PokemonCard from "../PokemonCard.svelte";
-  import { Toggle } from "flowbite-svelte";
 
   export let sideArea: SideAreaMachineType;
 
@@ -19,7 +18,7 @@
     {#each $sideArea?.context?.cards ?? [] as card}
       <div class="-mx-4">
         <PokemonCard
-          item={{ src: card.url, alt: card.uuid }}
+          item={{ src: card.url, alt: card.id }}
           opacity={false}
           isReverse={checked}
         />
