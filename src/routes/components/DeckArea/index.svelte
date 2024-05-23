@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { DeckAreaMachineType } from "../../machines/deckAreaMachine";
-  import { Card, Button } from "flowbite-svelte";
   import pokeUraImg from "$lib/images/poke_ura.jpg";
+  import { Button, Card } from "flowbite-svelte";
+  import type { DeckAreaMachineType } from "../../machines/deckAreaMachine";
   import CardListModal from "./CardListModal.svelte";
 
   export let deckArea: DeckAreaMachineType | undefined;
@@ -19,7 +19,7 @@
   />
 
   <Card padding="lg">
-    <h5 class="mb-4 text-lg font-medium text-gray-500 dark:text-gray-400">
+    <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
       Deck ({deck?.cards.length})
     </h5>
     <div>

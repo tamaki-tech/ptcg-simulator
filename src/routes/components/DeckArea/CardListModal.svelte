@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { Button, Modal } from "flowbite-svelte";
   import type { Deck } from "$lib/type";
-  import { Gallery } from "flowbite-svelte";
+  import { Button, Gallery, Modal } from "flowbite-svelte";
   import PokemonCard from "../PokemonCard.svelte";
 
   export let openModal = false;
@@ -10,7 +9,7 @@
 
   $: items = deck?.cards
     .map((c) => {
-      return { src: c.url, alt: c.uuid };
+      return { src: c.url, alt: c.id };
     })
     .reverse();
 </script>

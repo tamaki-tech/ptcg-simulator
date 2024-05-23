@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Spinner, Button, Modal, Label, Input } from "flowbite-svelte";
+  import { Button, Input, Label, Modal, Spinner } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher<{ click: string }>();

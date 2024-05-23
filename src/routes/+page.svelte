@@ -1,11 +1,12 @@
 <script lang="ts">
   import { useMachine } from "@xstate/svelte";
-  import { PtcgSimulatorMachine } from "./machines/index";
-  import DeckCodeModal from "./components/DeckCodeModal.svelte";
+  import BenchArea from "./components/BenchArea/index.svelte";
   import DeckArea from "./components/DeckArea/index.svelte";
+  import DeckCodeModal from "./components/DeckCodeModal.svelte";
   import HandsArea from "./components/HandsArea/index.svelte";
   import SideArea from "./components/SideArea/index.svelte";
-  import BenchArea from "./components/BenchArea/index.svelte";
+  import TrushArea from "./components/TrushArea/index.svelte";
+  import { PtcgSimulatorMachine } from "./machines/index";
 
   const { send, state } = useMachine(PtcgSimulatorMachine);
 
@@ -13,6 +14,7 @@
   $: handArea = $state.context.handArea;
   $: sideArea = $state.context.sideArea;
   $: benchAreas = $state.context.benchAreas;
+  $: trushArea = $state.context.trushArea;
 </script>
 
 {#if $state.value !== "ready"}
@@ -22,7 +24,7 @@
   />
 {:else}
   <section class="justify-center items-center flex-1 h-screen max-h-screen">
-    <div class="grid grid-rows-[280px_auto_auto] grid-cols-5">
+    <div class="grid grid-rows-3 grid-cols-5">
       {#each benchAreas as benchArea, index}
         <div class="flex row-span-1 col-span-1 p-2">
           <BenchArea pokemonArea={benchArea} {index} />
@@ -31,8 +33,13 @@
       <div class="flex row-span-2 col-span-1 p-2">
         <SideArea {sideArea} />
       </div>
-      <div class="row-span-2 col-span-3 p-2">
-        <HandsArea {handArea} />
+      <div class="row-span-2 col-span-3">
+        <div class="flex p-2">
+          <HandsArea {handArea} />
+        </div>
+        <div class="p-2">
+          <TrushArea {trushArea} />
+        </div>
       </div>
       <div class="flex row-span-2 col-span-1 p-2">
         <DeckArea {deckArea} />

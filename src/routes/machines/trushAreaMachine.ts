@@ -6,12 +6,12 @@ interface Context {
 }
 
 type Events =
-  | { type: "dealCards"; data: Card[] }
+  | { type: "dealCards"; data: Card }
   | { type: "assignCards"; data: Card[] };
 
-export const handsAreaMachine = () =>
+export const trushAreaMachine = () =>
   createMachine({
-    id: "handsArea",
+    id: "trushArea",
     predictableActionArguments: true,
     schema: {
       context: {} as Context,
@@ -26,7 +26,7 @@ export const handsAreaMachine = () =>
         on: {
           dealCards: {
             actions: assign({
-              cards: ({ cards }, evt) => [...cards, ...evt.data],
+              cards: ({ cards }, evt) => [...cards, evt.data],
             }),
           },
           assignCards: {
@@ -39,6 +39,6 @@ export const handsAreaMachine = () =>
     },
   });
 
-export type HandsAreaMachineType = ActorRefFrom<
-  ReturnType<typeof handsAreaMachine>
+export type TrushAreaMachineType = ActorRefFrom<
+  ReturnType<typeof trushAreaMachine>
 >;
