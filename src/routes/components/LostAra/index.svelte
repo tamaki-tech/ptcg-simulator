@@ -1,18 +1,18 @@
 <script lang="ts">
   import { Button, Card } from "flowbite-svelte";
   import { flip } from "svelte/animate";
-  import type { TrushAreaMachineType } from "../../machines/trushAreaMachine";
+  import type { LostAreaMachineType } from "../../machines/lostAreaMachine";
   import DragAndDropSection from "../DragAndDropSection.svelte";
   import PokemonCard from "../PokemonCard.svelte";
 
-  export let trushArea: TrushAreaMachineType;
+  export let lostArea: LostAreaMachineType;
 
   const handleconsider = (e: any) => {
-    trushArea.send({ type: "assignCards", data: e.detail.items });
+    lostArea.send({ type: "assignCards", data: e.detail.items });
   };
 
   const handleFinalize = (e: any) => {
-    trushArea.send({ type: "assignCards", data: e.detail.items });
+    lostArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
 
@@ -20,7 +20,7 @@
   <div class="flex justify-between">
     <div>
       <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-        Trush ({$trushArea?.context.cards.length})
+        Lost ({$lostArea?.context.cards.length})
       </h5>
     </div>
     <div>
@@ -29,12 +29,12 @@
   </div>
 
   <DragAndDropSection
-    cards={$trushArea?.context.cards}
+    cards={$lostArea?.context.cards}
     cols={5}
     on:consider={handleconsider}
     on:finalize={handleFinalize}
   >
-    {#each $trushArea?.context.cards ?? [] as card (card.id)}
+    {#each $lostArea?.context.cards ?? [] as card (card.id)}
       <div class="-mx-7" animate:flip={{ duration: 100 }}>
         <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false} />
       </div>

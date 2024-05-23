@@ -1,9 +1,11 @@
 <script lang="ts">
   import { useMachine } from "@xstate/svelte";
+  import BattleArea from "./components/BattleArea/index.svelte";
   import BenchArea from "./components/BenchArea/index.svelte";
   import DeckArea from "./components/DeckArea/index.svelte";
   import DeckCodeModal from "./components/DeckCodeModal.svelte";
   import HandsArea from "./components/HandsArea/index.svelte";
+  import LostArea from "./components/LostAra/index.svelte";
   import SideArea from "./components/SideArea/index.svelte";
   import TrushArea from "./components/TrushArea/index.svelte";
   import { PtcgSimulatorMachine } from "./machines/index";
@@ -14,7 +16,9 @@
   $: handArea = $state.context.handArea;
   $: sideArea = $state.context.sideArea;
   $: benchAreas = $state.context.benchAreas;
+  $: battleArea = $state.context.battleArea;
   $: trushArea = $state.context.trushArea;
+  $: lostArea = $state.context.lostArea;
 </script>
 
 {#if $state.value !== "ready"}
@@ -24,24 +28,38 @@
   />
 {:else}
   <section class="justify-center items-center flex-1 h-screen max-h-screen">
-    <div class="grid grid-rows-3 grid-cols-5">
+    <div class="grid grid-rows-1 grid-cols-5 gap-4">
+      <div class="flex row-span-1 col-span-5 justify-center">
+        <BattleArea pokemonArea={battleArea} />
+      </div>
+    </div>
+
+    <div class="grid grid-rows-1 grid-cols-5 gap-4 py-4">
       {#each benchAreas as benchArea, index}
-        <div class="flex row-span-1 col-span-1 p-2">
+        <div class="flex row-span-1 col-span-1">
           <BenchArea pokemonArea={benchArea} {index} />
         </div>
       {/each}
-      <div class="flex row-span-2 col-span-1 p-2">
+    </div>
+
+    <div class="grid grid-rows-2 grid-cols-5 gap-4">
+      <div class="flex row-span-2 col-span-1">
         <SideArea {sideArea} />
       </div>
-      <div class="row-span-2 col-span-3">
-        <div class="flex p-2">
-          <HandsArea {handArea} />
-        </div>
-        <div class="p-2">
+      <div class="flex row-span-2 col-span-2">
+        <HandsArea {handArea} />
+      </div>
+      <div
+        class="grid grid-rows-subgrid grid-cols-subgrid row-span-2 col-span-1"
+      >
+        <div class="flex row-span-1">
           <TrushArea {trushArea} />
         </div>
+        <div class="flex row-span-1">
+          <LostArea {lostArea} />
+        </div>
       </div>
-      <div class="flex row-span-2 col-span-1 p-2">
+      <div class="flex row-span-2 col-span-1">
         <DeckArea {deckArea} />
       </div>
     </div>
