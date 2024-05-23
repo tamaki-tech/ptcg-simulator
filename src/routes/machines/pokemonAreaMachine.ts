@@ -6,7 +6,10 @@ interface Context {
   damage: number;
 }
 
-type Events = { type: "assignCards"; data: Card[] };
+type Events =
+  | { type: "assignCards"; data: Card[] }
+  | { type: "addDamege" }
+  | { type: "subDamage" };
 
 export const pokemonAreaMachine = () =>
   createMachine({
@@ -27,6 +30,16 @@ export const pokemonAreaMachine = () =>
           assignCards: {
             actions: assign({
               cards: (_, evt) => evt.data,
+            }),
+          },
+          addDamege: {
+            actions: assign({
+              damage: ({ damage }) => damage + 10,
+            }),
+          },
+          subDamage: {
+            actions: assign({
+              damage: ({ damage }) => damage - 10,
             }),
           },
         },

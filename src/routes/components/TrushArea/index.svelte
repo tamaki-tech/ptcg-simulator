@@ -1,7 +1,9 @@
 <script lang="ts">
   import { Card } from "flowbite-svelte";
+  import { flip } from "svelte/animate";
   import type { TrushAreaMachineType } from "../../machines/trushAreaMachine";
   import DragAndDropSection from "../DragAndDropSection.svelte";
+  import PokemonCard from "../PokemonCard.svelte";
 
   export let trushArea: TrushAreaMachineType;
 
@@ -24,5 +26,11 @@
     cols={12}
     on:consider={handleconsider}
     on:finalize={handleFinalize}
-  />
+  >
+    {#each cards ?? [] as card (card.id)}
+      <div class="-mx-4" animate:flip={{ duration: 100 }}>
+        <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false} />
+      </div>
+    {/each}
+  </DragAndDropSection>
 </Card>
