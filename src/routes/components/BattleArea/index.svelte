@@ -4,7 +4,7 @@
   import type { PokemonAreaMachineType } from "../../machines/pokemonAreaMachine";
   import DamageCounter from "../DamageCounter.svelte";
   import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCard.svelte";
+  import PokemonCard from "../PokemonCard/index.svelte";
   export let pokemonArea: PokemonAreaMachineType;
 
   $: cards = $pokemonArea.context.cards;
