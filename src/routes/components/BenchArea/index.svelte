@@ -37,12 +37,12 @@
 
   <div class="py-4">
     <DragAndDropSection
-      cards={$pokemonArea.context.cards}
+      {cards}
       class={`grid-cols-${col}`}
       on:consider={handleDragAndDrop}
       on:finalize={handleDragAndDrop}
     >
-      {#each $pokemonArea.context.cards ?? [] as card (card.id)}
+      {#each cards ?? [] as card (card.id)}
         <div class="col-span-1 -mx-6 -my-0" animate:flip={{ duration: 100 }}>
           <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false} />
         </div>

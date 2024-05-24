@@ -30,9 +30,11 @@
       on:click={() => dispatch("subDamage")}
     >
       <MinusOutline size="xs" />
-      <Indicator color="red" size="xl" placement="top-right">
-        <span class="text-white text-xs font-bold">{damage}</span>
-      </Indicator>
+      {#if damage > 0}
+        <Indicator color="red" size="xl" placement="top-right">
+          <span class="text-white text-xs font-bold">{damage}</span>
+        </Indicator>
+      {/if}
     </Button>
   </ButtonGroup>
 </div>
