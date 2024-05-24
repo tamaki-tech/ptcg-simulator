@@ -3,7 +3,7 @@
   import { flip } from "svelte/animate";
   import type { SideAreaMachineType } from "../../machines/sideAreaMachine";
   import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCard.svelte";
+  import PokemonCard from "../PokemonCard/index.svelte";
 
   export let sideArea: SideAreaMachineType;
 

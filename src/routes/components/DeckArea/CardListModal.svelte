@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Deck } from "$lib/type";
   import { Button, Gallery, Modal } from "flowbite-svelte";
-  import PokemonCard from "../PokemonCard.svelte";
+  import PokemonCard from "../PokemonCard/index.svelte";
 
   export let openModal = false;
   export let title: string;

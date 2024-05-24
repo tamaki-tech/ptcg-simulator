@@ -5,7 +5,7 @@
   import type { PokemonAreaMachineType } from "../../machines/pokemonAreaMachine";
   import DamageCounter from "../DamageCounter.svelte";
   import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCard.svelte";
+  import PokemonCard from "../PokemonCard/index.svelte";
 
   const dispatch = createEventDispatcher<{ replacePokemon: void }>();
 
