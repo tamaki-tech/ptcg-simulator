@@ -16,6 +16,10 @@ import {
   type TrushAreaMachineType,
 } from "./trushAreaMachine";
 import { lostAreaMachine, type LostAreaMachineType } from "./lostAreaMachine";
+import {
+  stadiumAreaMachine,
+  type StadiumAreaMachineType,
+} from "./stadiumAreaMachine";
 
 interface Context {
   code: string;
@@ -26,6 +30,7 @@ interface Context {
   battleArea: PokemonAreaMachineType;
   trushArea: TrushAreaMachineType;
   lostArea: LostAreaMachineType;
+  stadiumArea: StadiumAreaMachineType;
 }
 
 type Event =
@@ -100,6 +105,7 @@ export const PtcgSimulatorMachine = createMachine(
         sideArea: () => spawn(sideAreaMachine()),
         trushArea: () => spawn(trushAreaMachine()),
         lostArea: () => spawn(lostAreaMachine()),
+        stadiumArea: () => spawn(stadiumAreaMachine()),
         benchAreas: () => {
           return Array.from({ length: 5 }, (_, _i) =>
             spawn(pokemonAreaMachine())

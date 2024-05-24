@@ -7,10 +7,7 @@
 
   export let handArea: HandsAreaMachineType;
 
-  const handleconsider = (e: any) => {
-    handArea.send({ type: "assignCards", data: e.detail.items });
-  };
-  const handleFinalize = (e: any) => {
+  const handleDragAndDrop = (e: any) => {
     handArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
@@ -34,9 +31,9 @@
   </div>
   <DragAndDropSection
     cards={$handArea.context.cards}
-    cols={12}
-    on:consider={handleconsider}
-    on:finalize={handleFinalize}
+    class="grid-cols-12"
+    on:consider={handleDragAndDrop}
+    on:finalize={handleDragAndDrop}
   >
     {#each $handArea.context.cards ?? [] as card (card.id)}
       <div class="-mx-6" animate:flip={{ duration: 100 }}>

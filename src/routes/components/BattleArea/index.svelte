@@ -8,16 +8,15 @@
 
   export let pokemonArea: PokemonAreaMachineType;
 
-  const handleconsider = (e: any) => {
-    pokemonArea.send({ type: "assignCards", data: e.detail.items });
-  };
+  $: cards = $pokemonArea.context.cards;
+  $: col = cards.length > 5 ? 5 : cards.length;
 
-  const handleFinalize = (e: any) => {
+  const handleDragAndDrop = (e: any) => {
     pokemonArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
 
-<Card size="sm" padding="xs">
+<Card size="lg" padding="xs">
   <div class="flex justify-between p-2">
     <div class="pt-1 pr-1">
       <h5 class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -49,15 +48,15 @@
     <Button outline class="max-h-1" color="yellow">こんらん</Button>
   </div>
 
-  <div class="p-4">
+  <div class="py-4 px-32">
     <DragAndDropSection
       cards={$pokemonArea.context.cards}
-      cols={5}
-      on:consider={handleconsider}
-      on:finalize={handleFinalize}
+      class="grid-cols-{col}"
+      on:consider={handleDragAndDrop}
+      on:finalize={handleDragAndDrop}
     >
       {#each $pokemonArea.context.cards ?? [] as card (card.id)}
-        <div class="-mx-4 -my-0" animate:flip={{ duration: 100 }}>
+        <div class="col-span-1 -m-6 -my-0" animate:flip={{ duration: 100 }}>
           <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false} />
         </div>
       {/each}

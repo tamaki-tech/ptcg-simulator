@@ -7,6 +7,8 @@
   import HandsArea from "./components/HandsArea/index.svelte";
   import LostArea from "./components/LostAra/index.svelte";
   import SideArea from "./components/SideArea/index.svelte";
+  import StadiumArea from "./components/StadiumArea/index.svelte";
+  import SupplyArea from "./components/SupplyArea/index.svelte";
   import TrushArea from "./components/TrushArea/index.svelte";
   import { PtcgSimulatorMachine } from "./machines/index";
 
@@ -19,6 +21,7 @@
   $: battleArea = $state.context.battleArea;
   $: trushArea = $state.context.trushArea;
   $: lostArea = $state.context.lostArea;
+  $: stadiumArea = $state.context.stadiumArea;
 </script>
 
 {#if $state.value !== "ready"}
@@ -28,9 +31,15 @@
   />
 {:else}
   <section class="justify-center items-center flex-1 h-screen max-h-screen">
-    <div class="grid grid-rows-1 grid-cols-5 gap-4">
-      <div class="flex row-span-1 col-span-5 justify-center">
+    <div class="grid grid-rows-1 grid-cols-4 gap-4">
+      <div class="flex row-span-1 col-span-1">
+        <StadiumArea {stadiumArea} />
+      </div>
+      <div class="flex row-span-1 col-span-2">
         <BattleArea pokemonArea={battleArea} />
+      </div>
+      <div class="flex row-span-1 col-span-1">
+        <SupplyArea />
       </div>
     </div>
 
