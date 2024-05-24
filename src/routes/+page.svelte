@@ -49,7 +49,13 @@
     <section class="grid grid-rows-1 grid-cols-5 gap-4 py-4">
       {#each benchAreas as benchArea, index}
         <div class="flex row-span-1 col-span-1">
-          <BenchArea pokemonArea={benchArea} {index} />
+          <BenchArea
+            pokemonArea={benchArea}
+            {index}
+            on:replacePokemon={() => {
+              send({ type: "replacePokemon", benchNumber: index });
+            }}
+          />
         </div>
       {/each}
     </section>
