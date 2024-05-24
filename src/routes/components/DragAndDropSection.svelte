@@ -10,7 +10,12 @@
 <section
   class="grid px-8 {className} place-items-center"
   style="min-height: 96px;"
-  use:dndzone={{ items: cards, flipDurationMs: 100, dropTargetStyle: {} }}
+  use:dndzone={{
+    items: cards,
+    flipDurationMs: 100,
+    dropTargetStyle: {},
+    centreDraggedOnCursor: true,
+  }}
   on:consider
   on:finalize
 >

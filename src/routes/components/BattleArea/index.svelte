@@ -11,19 +11,23 @@
   $: cards = $pokemonArea.context.cards;
   $: col = cards.length > 5 ? 5 : cards.length;
 
+  let isPoisoned = false;
+  let isBurned = false;
+  let isAsleep = false;
+  let isConfused = false;
+
   const handleDragAndDrop = (e: any) => {
     pokemonArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
 
 <Card size="lg" padding="xs">
-  <div class="flex justify-between p-2">
+  <section class="flex justify-between p-2">
     <div class="pt-1 pr-1">
       <h5 class="text-sm font-medium text-gray-500 dark:text-gray-400">
         Battle
       </h5>
     </div>
-
     <div>
       <ButtonGroup size="xs">
         <Button outline size="xs" color="light" class="max-h-1">
@@ -40,15 +44,54 @@
       on:addDamage={() => pokemonArea.send({ type: "addDamege" })}
       on:subDamage={() => pokemonArea.send({ type: "subDamage" })}
     />
-  </div>
-  <div class="flex gap-1 justify-center">
-    <Button outline class="max-h-1" color="purple">どく</Button>
-    <Button outline class="max-h-1" color="primary">やけど</Button>
-    <Button outline class="max-h-1" color="blue">ねむり</Button>
-    <Button outline class="max-h-1" color="yellow">こんらん</Button>
-  </div>
+  </section>
 
-  <div class="py-4 px-32">
+  <section class="flex gap-1 justify-center">
+    <Button
+      pill
+      outline={!isPoisoned}
+      class="max-h-1"
+      color="purple"
+      on:click={() => (isPoisoned = !isPoisoned)}
+    >
+      どく
+    </Button>
+    <Button
+      pill
+      outline={!isBurned}
+      class="max-h-1"
+      color="primary"
+      on:click={() => (isBurned = !isBurned)}
+    >
+      やけど
+    </Button>
+    <Button
+      pill
+      outline={!isAsleep}
+      class="max-h-1"
+      color="blue"
+      on:click={() => {
+        isAsleep = !isAsleep;
+        isConfused = false;
+      }}
+    >
+      ねむり
+    </Button>
+    <Button
+      pill
+      outline={!isConfused}
+      class="max-h-1"
+      color="yellow"
+      on:click={() => {
+        isConfused = !isConfused;
+        isAsleep = false;
+      }}
+    >
+      こんらん
+    </Button>
+  </section>
+
+  <section class="py-4 px-32">
     <DragAndDropSection
       cards={$pokemonArea.context.cards}
       class="grid-cols-{col}"
@@ -61,5 +104,5 @@
         </div>
       {/each}
     </DragAndDropSection>
-  </div>
+  </section>
 </Card>

@@ -9,6 +9,7 @@
   import SideArea from "./components/SideArea/index.svelte";
   import StadiumArea from "./components/StadiumArea/index.svelte";
   import SupplyArea from "./components/SupplyArea/index.svelte";
+  import Toasts from "./components/Toasts.svelte";
   import TrushArea from "./components/TrushArea/index.svelte";
   import { PtcgSimulatorMachine } from "./machines/index";
 
@@ -30,8 +31,10 @@
     on:click={(e) => send({ type: "searchDeck", code: e.detail })}
   />
 {:else}
+  <Toasts />
+
   <section class="justify-center items-center flex-1 h-screen max-h-screen">
-    <div class="grid grid-rows-1 grid-cols-4 gap-4">
+    <section class="grid grid-rows-1 grid-cols-4 gap-4">
       <div class="flex row-span-1 col-span-1">
         <StadiumArea {stadiumArea} />
       </div>
@@ -41,17 +44,17 @@
       <div class="flex row-span-1 col-span-1">
         <SupplyArea />
       </div>
-    </div>
+    </section>
 
-    <div class="grid grid-rows-1 grid-cols-5 gap-4 py-4">
+    <section class="grid grid-rows-1 grid-cols-5 gap-4 py-4">
       {#each benchAreas as benchArea, index}
         <div class="flex row-span-1 col-span-1">
           <BenchArea pokemonArea={benchArea} {index} />
         </div>
       {/each}
-    </div>
+    </section>
 
-    <div class="grid grid-rows-2 grid-cols-5 gap-4">
+    <section class="grid grid-rows-2 grid-cols-5 gap-4">
       <div class="flex row-span-2 col-span-1">
         <SideArea {sideArea} />
       </div>
@@ -71,6 +74,6 @@
       <div class="flex row-span-2 col-span-1">
         <DeckArea {deckArea} />
       </div>
-    </div>
+    </section>
   </section>
 {/if}

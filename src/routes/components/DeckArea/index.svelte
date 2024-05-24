@@ -2,11 +2,17 @@
   import pokeUraImg from "$lib/images/poke_ura.jpg";
   import { Button, Card } from "flowbite-svelte";
   import type { DeckAreaMachineType } from "../../machines/deckAreaMachine";
+  import { addToast } from "../../toast";
   import CardListModal from "./CardListModal.svelte";
 
-  export let deckArea: DeckAreaMachineType | undefined;
+  export let deckArea: DeckAreaMachineType;
 
   let openDeckListModal = false;
+
+  const shuffleDeck = () => {
+    deckArea.send({ type: "shuffleDeck" });
+    addToast("デッキをシャッフルしました"); // TODO machineから実行しなくて良いのか？
+  };
 </script>
 
 {#if $deckArea?.value === "ready"}
@@ -23,24 +29,14 @@
           Deck ({$deckArea?.context.deck?.cards.length})
         </h5>
       </div>
-      <div>
-        <Button
-          outline
-          size="xs"
-          color="light"
-          class="max-h-1"
-          on:click={() => (openDeckListModal = true)}
-        >
-          確認
-        </Button>
-      </div>
+      <div></div>
     </div>
 
     <div>
       <img
         alt="poke_ura"
         role="none"
-        class="cursor-pointer hover:opacity-80 transition-opacity object-contain h-24 w-full"
+        class="cursor-pointer hover:opacity-80 transition-opacity object-contain h-28 w-full"
         src={pokeUraImg}
         on:click={() => deckArea?.send("dealCards")}
       />
@@ -52,7 +48,16 @@
         size="xs"
         color="light"
         class="max-h-1 w-full"
-        on:click={() => deckArea?.send({ type: "shuffleDeck" })}
+        on:click={() => (openDeckListModal = true)}
+      >
+        デッキ確認
+      </Button>
+      <Button
+        outline
+        size="xs"
+        color="light"
+        class="max-h-1 w-full"
+        on:click={shuffleDeck}
       >
         シャッフル
       </Button>
