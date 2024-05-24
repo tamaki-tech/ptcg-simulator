@@ -1,10 +1,13 @@
 <script lang="ts">
   import { Button, ButtonGroup, Card } from "flowbite-svelte";
+  import { createEventDispatcher } from "svelte";
   import { flip } from "svelte/animate";
   import type { PokemonAreaMachineType } from "../../machines/pokemonAreaMachine";
   import DamageCounter from "../DamageCounter.svelte";
   import DragAndDropSection from "../DragAndDropSection.svelte";
   import PokemonCard from "../PokemonCard.svelte";
+
+  const dispatch = createEventDispatcher<{ replacePokemon: void }>();
 
   export let pokemonArea: PokemonAreaMachineType;
   export let index: number;
@@ -31,7 +34,13 @@
     />
   </div>
   <ButtonGroup size="xs">
-    <Button outline size="xs" color="light" class="max-h-1">バトル</Button>
+    <Button
+      outline
+      size="xs"
+      color="light"
+      class="max-h-1"
+      on:click={() => dispatch("replacePokemon")}>バトル</Button
+    >
     <Button outline size="xs" color="light" class="max-h-1">トラッシュ</Button>
   </ButtonGroup>
 
