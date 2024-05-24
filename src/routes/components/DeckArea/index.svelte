@@ -7,54 +7,58 @@
   export let deckArea: DeckAreaMachineType | undefined;
 
   let openDeckListModal = false;
-
-  $: deck = $deckArea?.context.deck;
 </script>
 
 {#if $deckArea?.value === "ready"}
   <CardListModal
-    {deck}
-    title={`Deck Card List (${deck?.cards.length})`}
+    deck={$deckArea?.context.deck}
+    title={`Deck Card List (${$deckArea?.context.deck?.cards.length})`}
     bind:openModal={openDeckListModal}
   />
 
-  <Card padding="lg">
-    <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-      Deck ({deck?.cards.length})
-    </h5>
+  <Card size="xs" padding="sm">
+    <div class="flex justify-between">
+      <div>
+        <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+          Deck ({$deckArea?.context.deck?.cards.length})
+        </h5>
+      </div>
+      <div>
+        <Button
+          outline
+          size="xs"
+          color="light"
+          class="max-h-1"
+          on:click={() => (openDeckListModal = true)}
+        >
+          確認
+        </Button>
+      </div>
+    </div>
+
     <div>
       <img
         alt="poke_ura"
         role="none"
-        class="cursor-pointer hover:opacity-80 transition-opacity object-contain h-36 w-full"
+        class="cursor-pointer hover:opacity-80 transition-opacity object-contain h-24 w-full"
         src={pokeUraImg}
         on:click={() => deckArea?.send("dealCards")}
       />
     </div>
 
-    <!-- Menuの位置を検討する -->
     <div class="py-4">
-      <div class="py-1">
-        <Button
-          size="xs"
-          class="w-full p-2"
-          on:click={() => deckArea?.send({ type: "shuffleDeck" })}
-        >
-          shuffle
-        </Button>
-      </div>
-      <div class="py-1">
-        <Button size="xs" class="w-full py-2">flip deck top</Button>
-      </div>
-      <div class="py-1">
-        <Button
-          size="xs"
-          class="w-full py-2"
-          on:click={() => (openDeckListModal = true)}
-        >
-          show card list
-        </Button>
-      </div>
+      <Button
+        outline
+        size="xs"
+        color="light"
+        class="max-h-1 w-full"
+        on:click={() => deckArea?.send({ type: "shuffleDeck" })}
+      >
+        シャッフル
+      </Button>
+      <Button outline size="xs" color="light" class="max-h-1 w-full">
+        デッキトップ
+      </Button>
     </div>
   </Card>
 {/if}

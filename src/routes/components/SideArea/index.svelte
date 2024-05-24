@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card, Toggle } from "flowbite-svelte";
+  import { Button, ButtonGroup, Card, Toggle } from "flowbite-svelte";
   import { flip } from "svelte/animate";
   import type { SideAreaMachineType } from "../../machines/sideAreaMachine";
   import DragAndDropSection from "../DragAndDropSection.svelte";
@@ -9,8 +9,7 @@
 
   let checked = true;
 
-  $: cards = $sideArea?.context.cards;
-  $: toggleLabel = checked ? "back" : "front";
+  $: toggleLabel = checked ? "裏" : "表";
 
   const handleconsider = (e: any) => {
     sideArea.send({ type: "assignCards", data: e.detail.items });
@@ -21,19 +20,33 @@
   };
 </script>
 
-<Card size="xs" padding="xs">
-  <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-    Side ({$sideArea?.context?.cards?.length})
-  </h5>
+<Card size="xs" padding="sm">
+  <div class="flex justify-between">
+    <div>
+      <h5 class="text-sm font-medium text-gray-500 dark:text-gray-400">
+        Side ({$sideArea?.context?.cards?.length})
+      </h5>
+    </div>
+    <div>
+      <Toggle size="small" bind:checked>{toggleLabel}</Toggle>
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-center items-center py-2">
+    <ButtonGroup size="xs">
+      <Button outline size="xs" color="light" class="max-h-1">1枚</Button>
+      <Button outline size="xs" color="light" class="max-h-1">2枚</Button>
+    </ButtonGroup>
+  </div>
+
   <DragAndDropSection
-    {cards}
+    cards={$sideArea?.context.cards}
     cols={2}
-    mx={1}
     on:consider={handleconsider}
     on:finalize={handleFinalize}
   >
-    {#each cards ?? [] as card (card.id)}
-      <div class="-mx-2" animate:flip={{ duration: 100 }}>
+    {#each $sideArea?.context.cards ?? [] as card (card.id)}
+      <div class="-mx-3" animate:flip={{ duration: 100 }}>
         <PokemonCard
           item={{ src: card.url, alt: card.id }}
           opacity={false}
@@ -42,7 +55,4 @@
       </div>
     {/each}
   </DragAndDropSection>
-  <div class="p-4">
-    <Toggle size="small" bind:checked>{toggleLabel}</Toggle>
-  </div>
 </Card>
