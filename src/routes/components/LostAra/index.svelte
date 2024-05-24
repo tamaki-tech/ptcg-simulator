@@ -7,11 +7,7 @@
 
   export let lostArea: LostAreaMachineType;
 
-  const handleconsider = (e: any) => {
-    lostArea.send({ type: "assignCards", data: e.detail.items });
-  };
-
-  const handleFinalize = (e: any) => {
+  const handleDragAndDrop = (e: any) => {
     lostArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
@@ -30,9 +26,9 @@
 
   <DragAndDropSection
     cards={$lostArea?.context.cards}
-    cols={5}
-    on:consider={handleconsider}
-    on:finalize={handleFinalize}
+    class="grid-flow-col-dense"
+    on:consider={handleDragAndDrop}
+    on:finalize={handleDragAndDrop}
   >
     {#each $lostArea?.context.cards ?? [] as card (card.id)}
       <div class="-mx-7" animate:flip={{ duration: 100 }}>

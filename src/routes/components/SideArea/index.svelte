@@ -11,11 +11,7 @@
 
   $: toggleLabel = checked ? "裏" : "表";
 
-  const handleconsider = (e: any) => {
-    sideArea.send({ type: "assignCards", data: e.detail.items });
-  };
-
-  const handleFinalize = (e: any) => {
+  const handleDragAndDrop = (e: any) => {
     sideArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
@@ -41,12 +37,12 @@
 
   <DragAndDropSection
     cards={$sideArea?.context.cards}
-    cols={2}
-    on:consider={handleconsider}
-    on:finalize={handleFinalize}
+    class="grid-cols-2"
+    on:consider={handleDragAndDrop}
+    on:finalize={handleDragAndDrop}
   >
     {#each $sideArea?.context.cards ?? [] as card (card.id)}
-      <div class="-mx-3" animate:flip={{ duration: 100 }}>
+      <div class="-mx-4" animate:flip={{ duration: 100 }}>
         <PokemonCard
           item={{ src: card.url, alt: card.id }}
           opacity={false}

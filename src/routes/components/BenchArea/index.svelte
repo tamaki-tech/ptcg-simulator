@@ -9,11 +9,10 @@
   export let pokemonArea: PokemonAreaMachineType;
   export let index: number;
 
-  const handleconsider = (e: any) => {
-    pokemonArea.send({ type: "assignCards", data: e.detail.items });
-  };
+  $: cards = $pokemonArea.context.cards;
+  $: col = cards.length > 5 ? 5 : cards.length;
 
-  const handleFinalize = (e: any) => {
+  const handleDragAndDrop = (e: any) => {
     pokemonArea.send({ type: "assignCards", data: e.detail.items });
   };
 </script>
@@ -39,12 +38,12 @@
   <div class="py-4">
     <DragAndDropSection
       cards={$pokemonArea.context.cards}
-      cols={5}
-      on:consider={handleconsider}
-      on:finalize={handleFinalize}
+      class={`grid-cols-${col}`}
+      on:consider={handleDragAndDrop}
+      on:finalize={handleDragAndDrop}
     >
       {#each $pokemonArea.context.cards ?? [] as card (card.id)}
-        <div class="-mx-6 -my-0" animate:flip={{ duration: 100 }}>
+        <div class="col-span-1 -mx-6 -my-0" animate:flip={{ duration: 100 }}>
           <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false} />
         </div>
       {/each}

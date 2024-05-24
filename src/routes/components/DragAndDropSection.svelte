@@ -3,11 +3,12 @@
   import { dndzone } from "svelte-dnd-action";
 
   export let cards: Card[];
-  export let cols = 12;
+  export { className as class };
+  let className = "";
 </script>
 
 <section
-  class="grid grid-cols-{cols} px-8 items-center"
+  class="grid px-8 {className} place-items-center"
   style="min-height: 96px;"
   use:dndzone={{ items: cards, flipDurationMs: 100, dropTargetStyle: {} }}
   on:consider
