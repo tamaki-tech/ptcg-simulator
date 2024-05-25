@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Deck } from "$lib/type";
   import { Button, Modal } from "flowbite-svelte";
-  import PokemonCard from "../PokemonCards/PokemonCard/index.svelte";
+  import DeckListCard from "../PokemonCards/DeckListCard/index.svelte";
 
   export let openModal = false;
   export let title: string;
@@ -18,7 +18,7 @@
   <div class="grid grid-cols-10 gap-1">
     {#each items ?? [] as item}
       <div class="cursor-pointer">
-        <PokemonCard {item} />
+        <DeckListCard {item} />
       </div>
     {/each}
   </div>

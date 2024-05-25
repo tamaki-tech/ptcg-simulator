@@ -19,8 +19,8 @@
 <CardViewModal bind:openModal {item}>
   <svelte:fragment slot="footer">
     <Button color="alternative">閉じる</Button>
-    <Button>デッキボトムに戻す</Button>
-    <Button>デッキトップに戻す</Button>
+    <Button>手札に加える</Button>
+    <Button>トラッシュに送る</Button>
   </svelte:fragment>
 </CardViewModal>
 
@@ -33,12 +33,12 @@
 />
 
 <Dropdown
-  placement="right-start"
+  placement="left-start"
   bind:open={openDropDownMenu}
   on:close={() => (openDropDownMenu = false)}
 >
   <DropdownItem on:click={() => (openModal = true)}>拡大表示する</DropdownItem>
   <DropdownDivider />
-  <DropdownItem>デッキトップに戻す</DropdownItem>
-  <DropdownItem>デッキボトムに戻す</DropdownItem>
+  <DropdownItem>手札に加える</DropdownItem>
+  <DropdownItem>トラッシュに送る</DropdownItem>
 </Dropdown>
