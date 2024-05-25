@@ -1,6 +1,6 @@
 <script lang="ts">
   import pokeUraImg from "$lib/images/poke_ura.jpg";
-  import { Dropdown, DropdownItem } from "flowbite-svelte";
+  import { Dropdown, DropdownDivider, DropdownItem } from "flowbite-svelte";
   import CardViewModal from "./CardViewModal.svelte";
 
   export let item: { src: string; alt?: string };
@@ -32,6 +32,7 @@
   on:close={() => (openDropDownMenu = false)}
 >
   <DropdownItem on:click={() => (openModal = true)}>拡大表示する</DropdownItem>
+  <DropdownDivider />
   <DropdownItem>デッキトップに戻す</DropdownItem>
   <DropdownItem>デッキボトムに戻す</DropdownItem>
 </Dropdown>

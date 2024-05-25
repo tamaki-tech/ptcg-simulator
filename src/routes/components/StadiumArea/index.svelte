@@ -3,7 +3,7 @@
   import { flip } from "svelte/animate";
   import type { StadiumAreaMachineType } from "../../machines/stadiumAreaMachine";
   import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCard/index.svelte";
+  import PokemonCard from "../PokemonCards/PokemonCard/index.svelte";
 
   export let stadiumArea: StadiumAreaMachineType;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Deck } from "$lib/type";
-  import { Button, Gallery, Modal } from "flowbite-svelte";
-  import PokemonCard from "../PokemonCard/index.svelte";
+  import { Button, Modal } from "flowbite-svelte";
+  import PokemonCard from "../PokemonCards/PokemonCard/index.svelte";
 
   export let openModal = false;
   export let title: string;
@@ -14,14 +14,17 @@
     .reverse();
 </script>
 
-<Modal {title} bind:open={openModal} size="lg" autoclose>
-  <Gallery class="gap-4 grid-cols-7" {items} let:item>
-    <div class="cursor-pointer">
-      <PokemonCard {item} />
-    </div>
-  </Gallery>
+<Modal {title} bind:open={openModal} size="lg">
+  <div class="grid grid-cols-10 gap-1">
+    {#each items ?? [] as item}
+      <div class="cursor-pointer">
+        <PokemonCard {item} />
+      </div>
+    {/each}
+  </div>
+
   <svelte:fragment slot="footer">
-    <Button>shuffle and close</Button>
-    <Button color="alternative">close</Button>
+    <Button>シャッフルして閉じる</Button>
+    <Button color="alternative">閉じる</Button>
   </svelte:fragment>
 </Modal>

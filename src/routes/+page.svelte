@@ -15,6 +15,8 @@
 
   const { send, state } = useMachine(PtcgSimulatorMachine);
 
+  let openCardViewModal = false;
+
   $: deckArea = $state.context.deckArea;
   $: handArea = $state.context.handArea;
   $: sideArea = $state.context.sideArea;
