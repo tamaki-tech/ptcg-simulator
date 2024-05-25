@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="flex row-span-2 col-span-1">
-        <DeckArea {deckArea} />
+        <DeckArea {deckArea} on:sendCardToHand />
       </div>
     </section>
   </section>

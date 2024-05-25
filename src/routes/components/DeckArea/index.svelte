@@ -20,6 +20,10 @@
     deck={$deckArea?.context.deck}
     title={`Deck Card List (${$deckArea?.context.deck?.cards.length})`}
     bind:openModal={openDeckListModal}
+    on:sendCardToHand={() => {
+      console.log("hello"); // TODO 実装
+      openDeckListModal = false;
+    }}
   />
 
   <Card size="xs" padding="sm">

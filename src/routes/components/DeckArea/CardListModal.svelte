@@ -9,7 +9,7 @@
 
   $: items = deck?.cards
     .map((c) => {
-      return { src: c.url, alt: c.id };
+      return { id: c.id, src: c.url, alt: c.id };
     })
     .reverse();
 </script>
@@ -18,7 +18,7 @@
   <div class="grid grid-cols-10 gap-1">
     {#each items ?? [] as item}
       <div class="cursor-pointer">
-        <DeckListCard {item} />
+        <DeckListCard {item} on:sendCardToHand />
       </div>
     {/each}
   </div>

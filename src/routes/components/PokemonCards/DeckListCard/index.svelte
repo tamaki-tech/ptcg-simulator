@@ -5,10 +5,13 @@
     DropdownDivider,
     DropdownItem,
   } from "flowbite-svelte";
+  import { createEventDispatcher } from "svelte";
   import CardImage from "../components/CardImage.svelte";
   import CardViewModal from "../components/CardViewModal.svelte";
 
-  export let item: { src: string; alt?: string };
+  const dispatch = createEventDispatcher<{ sendCardToHand: { id: string } }>();
+
+  export let item: { id: string; src: string; alt?: string };
   export let isReverse = false;
   export let opacity = true;
 
@@ -19,7 +22,9 @@
 <CardViewModal bind:openModal {item}>
   <svelte:fragment slot="footer">
     <Button color="alternative">閉じる</Button>
-    <Button>手札に加える</Button>
+    <Button on:click={() => dispatch("sendCardToHand", { id: item.id })}>
+      手札に加える
+    </Button>
     <Button>トラッシュに送る</Button>
   </svelte:fragment>
 </CardViewModal>
@@ -39,6 +44,12 @@
 >
   <DropdownItem on:click={() => (openModal = true)}>拡大表示する</DropdownItem>
   <DropdownDivider />
-  <DropdownItem>手札に加える</DropdownItem>
+  <DropdownItem
+    on:click={() => {
+      dispatch("sendCardToHand", { id: item.id });
+    }}
+  >
+    手札に加える
+  </DropdownItem>
   <DropdownItem>トラッシュに送る</DropdownItem>
 </Dropdown>
