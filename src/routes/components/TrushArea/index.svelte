@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Card } from "flowbite-svelte";
+  import { Button, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
   import type { TrushAreaMachineType } from "../../machines/trushAreaMachine";
   import DragAndDropSection from "../DragAndDropSection.svelte";
@@ -32,7 +32,18 @@
   >
     {#each $trushArea?.context.cards ?? [] as card (card.id)}
       <div class="-mx-7" animate:flip={{ duration: 100 }}>
-        <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false} />
+        <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false}>
+          <svelte:fragment slot="modalFooterMenu">
+            <Button>手札に戻す</Button>
+            <Button>デッキボトムに戻す</Button>
+            <Button>デッキトップに戻す</Button>
+          </svelte:fragment>
+          <svelte:fragment slot="dropDownMenu">
+            <DropdownItem>手札に戻す</DropdownItem>
+            <DropdownItem>デッキボトムに戻す</DropdownItem>
+            <DropdownItem>デッキトップに戻す</DropdownItem>
+          </svelte:fragment>
+        </PokemonCard>
       </div>
     {/each}
   </DragAndDropSection>
