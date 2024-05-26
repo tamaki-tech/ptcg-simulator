@@ -1,9 +1,15 @@
 <script lang="ts">
-  import { Button, ButtonGroup, Card, Toggle } from "flowbite-svelte";
+  import {
+    Button,
+    ButtonGroup,
+    Card,
+    DropdownItem,
+    Toggle,
+  } from "flowbite-svelte";
   import { flip } from "svelte/animate";
   import type { SideAreaMachineType } from "../../machines/sideAreaMachine";
-  import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCard/index.svelte";
+  import DragAndDropSection from "./components/DragAndDropSection.svelte";
+  import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
   export let sideArea: SideAreaMachineType;
 
@@ -47,7 +53,16 @@
           item={{ src: card.url, alt: card.id }}
           opacity={false}
           bind:isReverse={checked}
-        />
+        >
+          <svelte:fragment slot="modalFooterMenu">
+            <Button>サイドを取る</Button>
+            <Button>裏表を逆にする</Button>
+          </svelte:fragment>
+          <svelte:fragment slot="dropDownMenu">
+            <DropdownItem>サイドを取る</DropdownItem>
+            <DropdownItem>裏表を逆にする</DropdownItem>
+          </svelte:fragment>
+        </PokemonCard>
       </div>
     {/each}
   </DragAndDropSection>

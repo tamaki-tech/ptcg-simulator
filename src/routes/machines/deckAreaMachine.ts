@@ -9,9 +9,11 @@ interface Context {
 type Events =
   | { type: "dealCards"; quantity?: number }
   | { type: "dealSideCards"; quantity?: number }
+  | { type: "pickCard"; id: string }
   | { type: "shuffleDeck" }
-  | { type: "trushCard" };
+  | { type: "trushCard"; id: string };
 
+// TODO Util切り出す
 const shuffleArray = (array: any) => {
   const cloneArray = [...array];
   const result = cloneArray.reduce((_, cur, idx) => {
@@ -57,9 +59,23 @@ export const deckAreaMachine = (context: Context) =>
             }),
           },
           trushCard: {
-            actions: sendParent(({ deck }) => ({
+            actions: sendParent(({ deck }, { id }) => ({
               type: "sendCardToTrush",
-              data: deck.cards.pop(),
+              // TODO 共通化
+              data: deck.cards.splice(
+                deck.cards.findIndex((c) => c.id === id),
+                1
+              ),
+            })),
+          },
+          pickCard: {
+            actions: sendParent(({ deck }, { id }) => ({
+              type: "sendCardToHands",
+              // TODO 共通化
+              data: deck.cards.splice(
+                deck.cards.findIndex((c) => c.id === id),
+                1
+              ),
             })),
           },
         },
