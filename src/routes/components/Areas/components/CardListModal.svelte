@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Deck } from "$lib/type";
-  import { Button, Modal } from "flowbite-svelte";
+  import type { Card } from "$lib/type";
+  import { Modal } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
-  import DeckListCard from "../components/PokemonCards/DeckListCard.svelte";
+  import DeckListCard from "./PokemonCards/DeckListCard.svelte";
 
   const dispatch = createEventDispatcher<{
     shuffleDeck: void;
@@ -14,10 +14,10 @@
 
   export let openModal = false;
   export let title: string;
-  export let deck: Deck | undefined;
+  export let cards: Card[] = [];
   export let deckTop: number = defaultDeckTop;
 
-  $: items = deck?.cards
+  $: items = cards
     .map((c) => {
       return { id: c.id, src: c.url, alt: c.id };
     })
@@ -54,7 +54,6 @@
   </div>
 
   <svelte:fragment slot="footer">
-    <Button on:click={shuffleDeck}>シャッフルして閉じる</Button>
-    <Button on:click={closeModal} color="alternative">閉じる</Button>
+    <slot />
   </svelte:fragment>
 </Modal>

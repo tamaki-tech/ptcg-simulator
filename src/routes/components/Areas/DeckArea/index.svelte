@@ -3,7 +3,7 @@
   import { Button, Card } from "flowbite-svelte";
   import type { DeckAreaMachineType } from "../../../machines/deckAreaMachine";
   import { addToast } from "../../../toast";
-  import CardListModal from "./CardListModal.svelte";
+  import CardListModal from "../components/CardListModal.svelte";
   import DeckTopNumberModal from "./DeckTopNumberModal.svelte";
 
   export let deckArea: DeckAreaMachineType;
@@ -30,14 +30,26 @@
 
 {#if $deckArea?.value === "ready"}
   <CardListModal
-    deck={$deckArea?.context.deck}
+    cards={$deckArea?.context.deck?.cards}
     title={`Deck Card List (${$deckArea?.context.deck?.cards.length})`}
     bind:openModal={openDeckListModal}
     bind:deckTop
     on:shuffleDeck={shuffleDeck}
     on:pickCard={pickCard}
     on:trushCard={trushCard}
-  />
+  >
+    <Button
+      on:click={() => {
+        shuffleDeck();
+        openDeckListModal = false;
+      }}
+    >
+      シャッフルして閉じる
+    </Button>
+    <Button on:click={() => (openDeckListModal = false)} color="alternative">
+      閉じる
+    </Button>
+  </CardListModal>
 
   <DeckTopNumberModal
     bind:openModal={openDeckTopListModal}
