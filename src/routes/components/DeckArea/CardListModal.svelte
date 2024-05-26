@@ -2,7 +2,7 @@
   import type { Deck } from "$lib/type";
   import { Button, Modal } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
-  import DeckListCard from "../PokemonCards/DeckListCard/index.svelte";
+  import DeckListCard from "../PokemonCards/DeckListCard.svelte";
 
   const dispatch = createEventDispatcher<{
     shuffleDeck: void;

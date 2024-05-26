@@ -5,8 +5,8 @@
     DropdownDivider,
     DropdownItem,
   } from "flowbite-svelte";
-  import CardImage from "../components/CardImage.svelte";
-  import CardViewModal from "../components/CardViewModal.svelte";
+  import CardImage from "./components/CardImage.svelte";
+  import CardViewModal from "./components/CardViewModal.svelte";
 
   export let item: { src: string; alt?: string };
   export let isReverse = false;

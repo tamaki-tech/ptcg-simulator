@@ -6,8 +6,8 @@
     DropdownItem,
   } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
-  import CardImage from "../components/CardImage.svelte";
-  import CardViewModal from "../components/CardViewModal.svelte";
+  import CardImage from "./components/CardImage.svelte";
+  import CardViewModal from "./components/CardViewModal.svelte";
 
   const dispatch = createEventDispatcher<{
     pickCard: { id: string };

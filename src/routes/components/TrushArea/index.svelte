@@ -3,7 +3,7 @@
   import { flip } from "svelte/animate";
   import type { TrushAreaMachineType } from "../../machines/trushAreaMachine";
   import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCards/PokemonCard/index.svelte";
+  import PokemonCard from "../PokemonCards/PokemonCard.svelte";
 
   export let trushArea: TrushAreaMachineType;
 
