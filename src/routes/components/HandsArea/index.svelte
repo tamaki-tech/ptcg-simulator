@@ -13,21 +13,38 @@
 </script>
 
 <Card size="lg" padding="sm">
-  <div class="flex justify-between">
+  <div class="flex justify-between mb-2">
     <div>
       <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
         Hand ({$handArea.context.cards.length})
       </h5>
     </div>
-    <ButtonGroup>
-      <Button outline size="xs" color="light" class="max-h-1">
-        ナンジャモ
-      </Button>
-      <Button outline size="xs" color="light" class="max-h-1">博士</Button>
-      <Button outline size="xs" color="light" class="max-h-1">
-        ジャッジマン
-      </Button>
-    </ButtonGroup>
+    <div>
+      <div>
+        <ButtonGroup>
+          <Button outline size="xs" color="light" class="max-h-1">
+            ナンジャモ
+          </Button>
+          <Button outline size="xs" color="light" class="max-h-1">博士</Button>
+          <Button outline size="xs" color="light" class="max-h-1">
+            ジャッジマン
+          </Button>
+        </ButtonGroup>
+      </div>
+      <div>
+        <ButtonGroup>
+          <Button outline size="xs" color="light" class="max-h-1">
+            トラッシュ
+          </Button>
+          <Button outline size="xs" color="light" class="max-h-1">
+            デッキ上
+          </Button>
+          <Button outline size="xs" color="light" class="max-h-1">
+            デッキ下
+          </Button>
+        </ButtonGroup>
+      </div>
+    </div>
   </div>
   <DragAndDropSection
     cards={$handArea.context.cards}
