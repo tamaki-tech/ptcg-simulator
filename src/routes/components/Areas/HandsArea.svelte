@@ -2,8 +2,8 @@
   import { Button, ButtonGroup, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
   import type { HandsAreaMachineType } from "../../machines/handsAreaMachine";
-  import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCards/PokemonCard.svelte";
+  import DragAndDropSection from "./components/DragAndDropSection.svelte";
+  import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
   export let handArea: HandsAreaMachineType;
 

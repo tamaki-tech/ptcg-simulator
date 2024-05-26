@@ -1,8 +1,8 @@
 <script lang="ts">
   import pokeUraImg from "$lib/images/poke_ura.jpg";
   import { Button, Card } from "flowbite-svelte";
-  import type { DeckAreaMachineType } from "../../machines/deckAreaMachine";
-  import { addToast } from "../../toast";
+  import type { DeckAreaMachineType } from "../../../machines/deckAreaMachine";
+  import { addToast } from "../../../toast";
   import CardListModal from "./CardListModal.svelte";
   import DeckTopNumberModal from "./DeckTopNumberModal.svelte";
 

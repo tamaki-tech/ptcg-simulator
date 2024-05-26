@@ -1,16 +1,16 @@
 <script lang="ts">
   import { useMachine } from "@xstate/svelte";
-  import BattleArea from "./components/BattleArea/index.svelte";
-  import BenchArea from "./components/BenchArea/index.svelte";
-  import DeckArea from "./components/DeckArea/index.svelte";
+  import BattleArea from "./components/Areas/BattleArea.svelte";
+  import BenchArea from "./components/Areas/BenchArea.svelte";
+  import DeckArea from "./components/Areas/DeckArea/index.svelte";
+  import HandsArea from "./components/Areas/HandsArea.svelte";
+  import LostArea from "./components/Areas/LostArea.svelte";
+  import SideArea from "./components/Areas/SideArea.svelte";
+  import StadiumArea from "./components/Areas/StadiumArea.svelte";
+  import SupplyArea from "./components/Areas/SupplyArea/index.svelte";
+  import TrushArea from "./components/Areas/TrushArea.svelte";
   import DeckCodeModal from "./components/DeckCodeModal.svelte";
-  import HandsArea from "./components/HandsArea/index.svelte";
-  import LostArea from "./components/LostAra/index.svelte";
-  import SideArea from "./components/SideArea/index.svelte";
-  import StadiumArea from "./components/StadiumArea/index.svelte";
-  import SupplyArea from "./components/SupplyArea/index.svelte";
-  import Toasts from "./components/Toasts.svelte";
-  import TrushArea from "./components/TrushArea/index.svelte";
+  import Toasts from "./components/Toasts/index.svelte";
   import { PtcgSimulatorMachine } from "./machines/index";
 
   const { send, state } = useMachine(PtcgSimulatorMachine);

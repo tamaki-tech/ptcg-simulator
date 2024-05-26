@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Button, Card } from "flowbite-svelte";
+  import { Button, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
   import type { StadiumAreaMachineType } from "../../machines/stadiumAreaMachine";
-  import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCards/PokemonCard.svelte";
+  import DragAndDropSection from "./components/DragAndDropSection.svelte";
+  import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
   export let stadiumArea: StadiumAreaMachineType;
 
@@ -36,7 +36,14 @@
     >
       {#each cards ?? [] as card (card.id)}
         <div class="col-span-1 -mx-6 -my-0" animate:flip={{ duration: 100 }}>
-          <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false} />
+          <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false}>
+            <svelte:fragment slot="modalFooterMenu">
+              <Button>トラッシュする</Button>
+            </svelte:fragment>
+            <svelte:fragment slot="dropDownMenu">
+              <DropdownItem>トラッシュする</DropdownItem>
+            </svelte:fragment>
+          </PokemonCard>
         </div>
       {/each}
     </DragAndDropSection>

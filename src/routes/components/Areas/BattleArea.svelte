@@ -2,9 +2,9 @@
   import { Button, ButtonGroup, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
   import type { PokemonAreaMachineType } from "../../machines/pokemonAreaMachine";
-  import DamageCounter from "../DamageCounter.svelte";
-  import DragAndDropSection from "../DragAndDropSection.svelte";
-  import PokemonCard from "../PokemonCards/PokemonCard.svelte";
+  import DamageCounter from "./components/DamageCounter.svelte";
+  import DragAndDropSection from "./components/DragAndDropSection.svelte";
+  import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
   export let pokemonArea: PokemonAreaMachineType;
 
   $: cards = $pokemonArea.context.cards;
