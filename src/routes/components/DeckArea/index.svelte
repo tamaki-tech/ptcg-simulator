@@ -16,7 +16,12 @@
 
   const pickCard = (e: any) => {
     deckArea.send({ type: "pickCard", id: e.detail.id });
-    addToast("山札から手札にカードを追加しました");
+    addToast("デッキから手札にカードを追加しました");
+  };
+
+  const trushCard = (e: any) => {
+    deckArea.send({ type: "trushCard", id: e.detail.id });
+    addToast("デッキからカードを１枚トラッシュしました");
   };
 </script>
 
@@ -27,6 +32,7 @@
     bind:openModal={openDeckListModal}
     on:shuffleDeck={shuffleDeck}
     on:pickCard={pickCard}
+    on:trushCard={trushCard}
   />
 
   <Card size="xs" padding="sm">

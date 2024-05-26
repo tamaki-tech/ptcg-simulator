@@ -9,7 +9,10 @@
   import CardImage from "../components/CardImage.svelte";
   import CardViewModal from "../components/CardViewModal.svelte";
 
-  const dispatch = createEventDispatcher<{ pickCard: { id: string } }>();
+  const dispatch = createEventDispatcher<{
+    pickCard: { id: string };
+    trushCard: { id: string };
+  }>();
 
   export let item: { id: string; src: string; alt?: string };
   export let isReverse = false;
@@ -21,13 +24,17 @@
   const pickCard = () => {
     dispatch("pickCard", { id: item.id });
   };
+
+  const trushCard = () => {
+    dispatch("trushCard", { id: item.id });
+  };
 </script>
 
 <CardViewModal bind:openModal {item}>
   <svelte:fragment slot="footer">
     <Button color="alternative">閉じる</Button>
     <Button on:click={pickCard}>手札に加える</Button>
-    <Button>トラッシュに送る</Button>
+    <Button on:click={trushCard}>トラッシュに送る</Button>
   </svelte:fragment>
 </CardViewModal>
 
@@ -54,5 +61,12 @@
   >
     手札に加える
   </DropdownItem>
-  <DropdownItem>トラッシュに送る</DropdownItem>
+  <DropdownItem
+    on:click={() => {
+      trushCard();
+      openDropDownMenu = false;
+    }}
+  >
+    トラッシュに送る
+  </DropdownItem>
 </Dropdown>

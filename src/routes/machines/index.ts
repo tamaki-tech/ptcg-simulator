@@ -37,7 +37,7 @@ type Event =
   | { type: "searchDeck"; code: string }
   | { type: "sendCardToHands"; data: Card[] }
   | { type: "sendCardToSide"; data: Card[] }
-  | { type: "sendCardToTrush"; data: Card }
+  | { type: "sendCardToTrush"; data: Card[] }
   | { type: "replacePokemon"; benchNumber: number }
   | {
       type: "done.invoke.simulator.searchingDeck:invocation[0]";

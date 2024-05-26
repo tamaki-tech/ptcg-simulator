@@ -33,7 +33,7 @@
   <div class="grid grid-cols-10 gap-1">
     {#each items ?? [] as item}
       <div class="cursor-pointer">
-        <DeckListCard {item} on:pickCard />
+        <DeckListCard {item} on:pickCard on:trushCard />
       </div>
     {/each}
   </div>
