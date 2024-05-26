@@ -9,6 +9,7 @@ interface Context {
 type Events =
   | { type: "dealCards"; quantity?: number }
   | { type: "dealSideCards"; quantity?: number }
+  | { type: "pickCard"; id: string }
   | { type: "shuffleDeck" }
   | { type: "trushCard" };
 
@@ -60,6 +61,15 @@ export const deckAreaMachine = (context: Context) =>
             actions: sendParent(({ deck }) => ({
               type: "sendCardToTrush",
               data: deck.cards.pop(),
+            })),
+          },
+          pickCard: {
+            actions: sendParent(({ deck }, { id }) => ({
+              type: "sendCardToHands",
+              data: deck.cards.splice(
+                deck.cards.findIndex((c) => c.id === id),
+                1
+              ),
             })),
           },
         },

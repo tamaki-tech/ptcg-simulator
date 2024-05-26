@@ -15,8 +15,6 @@
 
   const { send, state } = useMachine(PtcgSimulatorMachine);
 
-  let openCardViewModal = false;
-
   $: deckArea = $state.context.deckArea;
   $: handArea = $state.context.handArea;
   $: sideArea = $state.context.sideArea;
@@ -80,7 +78,7 @@
         </div>
       </div>
       <div class="flex row-span-2 col-span-1">
-        <DeckArea {deckArea} on:sendCardToHand />
+        <DeckArea {deckArea} />
       </div>
     </section>
   </section>

@@ -13,6 +13,11 @@
     deckArea.send({ type: "shuffleDeck" });
     addToast("デッキをシャッフルしました"); // TODO machineから実行しなくて良いのか？
   };
+
+  const pickCard = (e: any) => {
+    deckArea.send({ type: "pickCard", id: e.detail.id });
+    addToast("山札から手札にカードを追加しました");
+  };
 </script>
 
 {#if $deckArea?.value === "ready"}
@@ -20,33 +25,24 @@
     deck={$deckArea?.context.deck}
     title={`Deck Card List (${$deckArea?.context.deck?.cards.length})`}
     bind:openModal={openDeckListModal}
-    on:sendCardToHand={() => {
-      console.log("hello"); // TODO 実装
-      openDeckListModal = false;
-    }}
+    on:shuffleDeck={shuffleDeck}
+    on:pickCard={pickCard}
   />
 
   <Card size="xs" padding="sm">
-    <div class="flex justify-between">
-      <div>
-        <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-          Deck ({$deckArea?.context.deck?.cards.length})
-        </h5>
-      </div>
-      <div></div>
-    </div>
+    <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+      Deck ({$deckArea?.context.deck?.cards.length})
+    </h5>
 
-    <div>
-      <img
-        alt="poke_ura"
-        role="none"
-        class="cursor-pointer hover:opacity-80 transition-opacity object-contain h-28 w-full"
-        src={pokeUraImg}
-        on:click={() => deckArea?.send("dealCards")}
-      />
-    </div>
+    <img
+      alt="poke_ura"
+      role="none"
+      class="cursor-pointer hover:opacity-80 transition-opacity object-contain h-28 w-full"
+      src={pokeUraImg}
+      on:click={() => deckArea?.send("dealCards")}
+    />
 
-    <div class="py-4">
+    <section class="py-4">
       <Button
         outline
         size="xs"
@@ -68,6 +64,6 @@
       <Button outline size="xs" color="light" class="max-h-1 w-full">
         デッキトップ
       </Button>
-    </div>
+    </section>
   </Card>
 {/if}
