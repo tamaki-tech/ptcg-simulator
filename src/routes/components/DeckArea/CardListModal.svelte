@@ -9,9 +9,13 @@
     pickCard: { id: string };
   }>();
 
+  // TODO refactor
+  const defaultDeckTop = 60;
+
   export let openModal = false;
   export let title: string;
   export let deck: Deck | undefined;
+  export let deckTop: number = defaultDeckTop;
 
   $: items = deck?.cards
     .map((c) => {
@@ -29,14 +33,23 @@
   };
 </script>
 
-<Modal {title} bind:open={openModal} size="lg">
+<Modal
+  {title}
+  bind:open={openModal}
+  size="lg"
+  on:close={() => {
+    // モーダルが閉じるときにめくるデッキトップの枚数を初期値に戻す
+    deckTop = defaultDeckTop;
+  }}
+>
   <div
     role="none"
     class="grid grid-cols-10 gap-1"
     on:contextmenu|preventDefault
   >
-    {#each items ?? [] as item}
-      <DeckListCard {item} on:pickCard on:trushCard />
+    {#each items ?? [] as item, i}
+      {@const isReverse = i > deckTop - 1}
+      <DeckListCard {item} on:pickCard on:trushCard {isReverse} />
     {/each}
   </div>
 

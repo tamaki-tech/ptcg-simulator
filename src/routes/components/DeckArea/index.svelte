@@ -4,10 +4,13 @@
   import type { DeckAreaMachineType } from "../../machines/deckAreaMachine";
   import { addToast } from "../../toast";
   import CardListModal from "./CardListModal.svelte";
+  import DeckTopNumberModal from "./DeckTopNumberModal.svelte";
 
   export let deckArea: DeckAreaMachineType;
 
   let openDeckListModal = false;
+  let openDeckTopListModal = false;
+  let deckTop = 60;
 
   const shuffleDeck = () => {
     deckArea.send({ type: "shuffleDeck" });
@@ -30,9 +33,18 @@
     deck={$deckArea?.context.deck}
     title={`Deck Card List (${$deckArea?.context.deck?.cards.length})`}
     bind:openModal={openDeckListModal}
+    bind:deckTop
     on:shuffleDeck={shuffleDeck}
     on:pickCard={pickCard}
     on:trushCard={trushCard}
+  />
+
+  <DeckTopNumberModal
+    bind:openModal={openDeckTopListModal}
+    on:chooseDeckTop={(e) => {
+      deckTop = e.detail.deckTop;
+      openDeckListModal = true;
+    }}
   />
 
   <Card size="xs" padding="sm">
@@ -67,7 +79,13 @@
       >
         シャッフル
       </Button>
-      <Button outline size="xs" color="light" class="max-h-1 w-full">
+      <Button
+        outline
+        size="xs"
+        color="light"
+        class="max-h-1 w-full"
+        on:click={() => (openDeckTopListModal = true)}
+      >
         デッキトップ
       </Button>
     </section>
