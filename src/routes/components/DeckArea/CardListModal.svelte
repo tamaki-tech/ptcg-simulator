@@ -30,11 +30,13 @@
 </script>
 
 <Modal {title} bind:open={openModal} size="lg">
-  <div class="grid grid-cols-10 gap-1">
+  <div
+    role="none"
+    class="grid grid-cols-10 gap-1"
+    on:contextmenu|preventDefault
+  >
     {#each items ?? [] as item}
-      <div class="cursor-pointer">
-        <DeckListCard {item} on:pickCard on:trushCard />
-      </div>
+      <DeckListCard {item} on:pickCard on:trushCard />
     {/each}
   </div>
 
