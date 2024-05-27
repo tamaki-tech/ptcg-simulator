@@ -1,4 +1,5 @@
-import type { Deck } from "$lib/type";
+import type { Card, Deck } from "$lib/type";
+import { findCardById, shuffleArray } from "$lib/utils/arrayUtils";
 import { assign, createMachine, type ActorRefFrom } from "xstate";
 import { sendParent } from "xstate/lib/actions";
 
@@ -11,20 +12,9 @@ type Events =
   | { type: "dealSideCards"; quantity?: number }
   | { type: "pickCard"; id: string }
   | { type: "shuffleDeck" }
+  | { type: "cardsToBottom"; data: Card[] }
+  | { type: "cardsToTop"; data: Card[] }
   | { type: "trushCard"; id: string };
-
-// TODO Util切り出す
-const shuffleArray = (array: any) => {
-  const cloneArray = [...array];
-  const result = cloneArray.reduce((_, cur, idx) => {
-    let rand = Math.floor(Math.random() * (idx + 1));
-    cloneArray[idx] = cloneArray[rand];
-    cloneArray[rand] = cur;
-    return cloneArray;
-  });
-
-  return result;
-};
 
 export const deckAreaMachine = (context: Context) =>
   createMachine({
@@ -51,6 +41,18 @@ export const deckAreaMachine = (context: Context) =>
               data: deck.cards.splice(-(quantity ?? 1)),
             })),
           },
+          trushCard: {
+            actions: sendParent(({ deck }, { id }) => ({
+              type: "sendCardToTrush",
+              data: findCardById(deck.cards, id),
+            })),
+          },
+          pickCard: {
+            actions: sendParent(({ deck }, { id }) => ({
+              type: "sendCardToHands",
+              data: findCardById(deck.cards, id),
+            })),
+          },
           shuffleDeck: {
             actions: assign({
               deck: ({ deck }) => {
@@ -58,25 +60,19 @@ export const deckAreaMachine = (context: Context) =>
               },
             }),
           },
-          trushCard: {
-            actions: sendParent(({ deck }, { id }) => ({
-              type: "sendCardToTrush",
-              // TODO 共通化
-              data: deck.cards.splice(
-                deck.cards.findIndex((c) => c.id === id),
-                1
-              ),
-            })),
+          cardsToBottom: {
+            actions: assign({
+              deck: ({ deck }, { data }) => {
+                return { ...deck, cards: [shuffleArray(data), ...deck.cards] };
+              },
+            }),
           },
-          pickCard: {
-            actions: sendParent(({ deck }, { id }) => ({
-              type: "sendCardToHands",
-              // TODO 共通化
-              data: deck.cards.splice(
-                deck.cards.findIndex((c) => c.id === id),
-                1
-              ),
-            })),
+          cardsToTop: {
+            actions: assign({
+              deck: ({ deck }, { data }) => {
+                return { ...deck, cards: [...deck.cards, shuffleArray(data)] };
+              },
+            }),
           },
         },
       },

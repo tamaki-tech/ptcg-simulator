@@ -39,6 +39,8 @@ type Event =
   | { type: "sendCardToSide"; data: Card[] }
   | { type: "sendCardToTrush"; data: Card[] }
   | { type: "replacePokemon"; benchNumber: number }
+  | { type: "sendCardsToDeckBottom"; data: Card[] }
+  | { type: "sendCardsToDeckTop"; data: Card[] }
   | {
       type: "done.invoke.simulator.searchingDeck:invocation[0]";
       data: DeckSearchResponse;
@@ -95,6 +97,18 @@ export const PtcgSimulatorMachine = createMachine(
               ctx.trushArea.send({ type: "dealCards", data: evt.data });
             },
           },
+          sendCardsToDeckBottom: {
+            actions: (ctx, evt) => {
+              if (evt.type !== "sendCardsToDeckBottom") return ctx;
+              ctx.deckArea.send({ type: "cardsToBottom", data: evt.data });
+            },
+          },
+          sendCardsToDeckTop: {
+            actions: (ctx, evt) => {
+              if (evt.type !== "sendCardsToDeckTop") return ctx;
+              ctx.deckArea.send({ type: "cardsToTop", data: evt.data });
+            },
+          },
           replacePokemon: {
             actions: assign({
               battleArea: ({ benchAreas }, evt) => benchAreas[evt.benchNumber],
@@ -128,7 +142,6 @@ export const PtcgSimulatorMachine = createMachine(
           return spawn(deckAreaMachine({ deck: evt.data }));
         },
       }),
-
       shuffleDeck: ({ deckArea }) => {
         deckArea.send({ type: "shuffleDeck" });
       },
