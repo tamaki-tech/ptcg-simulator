@@ -5,7 +5,7 @@
   import DeckListCard from "./PokemonCards/DeckListCard.svelte";
 
   const dispatch = createEventDispatcher<{
-    shuffleDeck: void;
+    trushCard: { id: string };
     pickCard: { id: string };
   }>();
 
@@ -23,13 +23,20 @@
     })
     .reverse();
 
-  const closeModal = () => {
-    openModal = false;
+  // デッキリストの表のカードが手札やトラッシュに行った際はめくられるデッキトップ枚数が減るので調整する
+  const decrementDeckTop = (index: number) => {
+    if (index > deckTop) return;
+    deckTop -= 1;
   };
 
-  const shuffleDeck = () => {
-    dispatch("shuffleDeck");
-    closeModal();
+  const pickCard = (e: any, index: number) => {
+    dispatch("pickCard", { id: e.detail.id });
+    decrementDeckTop(index);
+  };
+
+  const trushCard = (e: any, index: number) => {
+    dispatch("trushCard", { id: e.detail.id });
+    decrementDeckTop(index);
   };
 </script>
 
@@ -49,7 +56,12 @@
   >
     {#each items ?? [] as item, i}
       {@const isReverse = i > deckTop - 1}
-      <DeckListCard {item} on:pickCard on:trushCard {isReverse} />
+      <DeckListCard
+        {item}
+        {isReverse}
+        on:pickCard={(e) => pickCard(e, i)}
+        on:trushCard={(e) => trushCard(e, i)}
+      />
     {/each}
   </div>
 
