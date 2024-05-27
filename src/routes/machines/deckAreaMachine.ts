@@ -78,7 +78,3 @@ export const deckAreaMachine = (context: Context) =>
       },
     },
   });
-
-export type DeckAreaMachineType = ActorRefFrom<
-  ReturnType<typeof deckAreaMachine>
->;
