@@ -15,60 +15,55 @@ type Events =
   | { type: "sendToDeckBottom" }
   | { type: "sendToDeckTop" };
 
-export const handsAreaMachine = () =>
-  createMachine({
-    id: "handsArea",
-    predictableActionArguments: true,
-    schema: {
-      context: {} as Context,
-      events: {} as Events,
-    },
-    context: {
-      cards: [],
-    },
-    initial: "ready",
-    states: {
-      ready: {
-        on: {
-          dealCards: {
-            actions: assign({
-              cards: ({ cards }, evt) => [...cards, ...evt.data],
-            }),
-          },
-          assignCards: {
-            actions: assign({
-              cards: (_, evt) => evt.data,
-            }),
-          },
-          trushCard: {
-            actions: sendParent(({ cards }, { id }) => ({
-              type: "sendCardToTrush",
-              data: findCardById(cards, id),
-            })),
-          },
-          trushAllHand: {
-            actions: sendParent(({ cards }) => ({
-              type: "sendCardToTrush",
-              data: cards.splice(0),
-            })),
-          },
-          sendToDeckBottom: {
-            actions: sendParent(({ cards }) => ({
-              type: "sendCardsToDeckBottom",
-              data: cards.splice(0),
-            })),
-          },
-          sendToDeckTop: {
-            actions: sendParent(({ cards }) => ({
-              type: "sendCardsToDeckTop",
-              data: cards.splice(0),
-            })),
-          },
+export const handsAreaMachine = createMachine({
+  id: "handsArea",
+  predictableActionArguments: true,
+  schema: {
+    context: {} as Context,
+    events: {} as Events,
+  },
+  context: {
+    cards: [],
+  },
+  initial: "ready",
+  states: {
+    ready: {
+      on: {
+        dealCards: {
+          actions: assign({
+            cards: ({ cards }, evt) => [...cards, ...evt.data],
+          }),
+        },
+        assignCards: {
+          actions: assign({
+            cards: (_, evt) => evt.data,
+          }),
+        },
+        trushCard: {
+          actions: sendParent(({ cards }, { id }) => ({
+            type: "sendCardToTrush",
+            data: findCardById(cards, id),
+          })),
+        },
+        trushAllHand: {
+          actions: sendParent(({ cards }) => ({
+            type: "sendCardToTrush",
+            data: cards.splice(0),
+          })),
+        },
+        sendToDeckBottom: {
+          actions: sendParent(({ cards }) => ({
+            type: "sendCardsToDeckBottom",
+            data: cards.splice(0),
+          })),
+        },
+        sendToDeckTop: {
+          actions: sendParent(({ cards }) => ({
+            type: "sendCardsToDeckTop",
+            data: cards.splice(0),
+          })),
         },
       },
     },
-  });
-
-export type HandsAreaMachineType = ActorRefFrom<
-  ReturnType<typeof handsAreaMachine>
->;
+  },
+});

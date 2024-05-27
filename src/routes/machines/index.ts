@@ -1,36 +1,30 @@
 import type { Card, DeckSearchResponse } from "$lib/type";
-import { assign, createMachine, spawn } from "xstate";
+import {
+  assign,
+  createMachine,
+  sendTo,
+  spawn,
+  type ActorRefFrom,
+} from "xstate";
 import { client } from "$lib/apiClient";
-import { deckAreaMachine, type DeckAreaMachineType } from "./deckAreaMachine";
-import {
-  handsAreaMachine,
-  type HandsAreaMachineType,
-} from "./handsAreaMachine";
-import { sideAreaMachine, type SideAreaMachineType } from "./sideAreaMachine";
-import {
-  pokemonAreaMachine,
-  type PokemonAreaMachineType,
-} from "./pokemonAreaMachine";
-import {
-  trushAreaMachine,
-  type TrushAreaMachineType,
-} from "./trushAreaMachine";
-import { lostAreaMachine, type LostAreaMachineType } from "./lostAreaMachine";
-import {
-  stadiumAreaMachine,
-  type StadiumAreaMachineType,
-} from "./stadiumAreaMachine";
+import { deckAreaMachine } from "./deckAreaMachine";
+import { handsAreaMachine } from "./handsAreaMachine";
+import { sideAreaMachine } from "./sideAreaMachine";
+import { pokemonAreaMachine } from "./pokemonAreaMachine";
+import { trushAreaMachine } from "./trushAreaMachine";
+import { lostAreaMachine } from "./lostAreaMachine";
+import { stadiumAreaMachine } from "./stadiumAreaMachine";
 
 interface Context {
   code: string;
-  deckArea: DeckAreaMachineType;
-  handArea: HandsAreaMachineType;
-  sideArea: SideAreaMachineType;
-  benchAreas: PokemonAreaMachineType[];
-  battleArea: PokemonAreaMachineType;
-  trushArea: TrushAreaMachineType;
-  lostArea: LostAreaMachineType;
-  stadiumArea: StadiumAreaMachineType;
+  deckArea: ActorRefFrom<typeof deckAreaMachine>;
+  handArea: ActorRefFrom<typeof handsAreaMachine>;
+  sideArea: ActorRefFrom<typeof sideAreaMachine>;
+  benchAreas: ActorRefFrom<typeof pokemonAreaMachine>[];
+  battleArea: ActorRefFrom<typeof pokemonAreaMachine>;
+  trushArea: ActorRefFrom<typeof trushAreaMachine>;
+  lostArea: ActorRefFrom<typeof lostAreaMachine>;
+  stadiumArea: ActorRefFrom<typeof stadiumAreaMachine>;
 }
 
 type Event =
@@ -81,31 +75,26 @@ export const PtcgSimulatorMachine = createMachine(
         on: {
           sendCardToHands: {
             actions: (ctx, evt) => {
-              if (evt.type !== "sendCardToHands") return ctx;
               ctx.handArea.send({ type: "dealCards", data: evt.data });
             },
           },
           sendCardToSide: {
             actions: (ctx, evt) => {
-              if (evt.type !== "sendCardToSide") return ctx;
               ctx.sideArea.send({ type: "dealCards", data: evt.data });
             },
           },
           sendCardToTrush: {
             actions: (ctx, evt) => {
-              if (evt.type !== "sendCardToTrush") return ctx;
               ctx.trushArea.send({ type: "dealCards", data: evt.data });
             },
           },
           sendCardsToDeckBottom: {
             actions: (ctx, evt) => {
-              if (evt.type !== "sendCardsToDeckBottom") return ctx;
               ctx.deckArea.send({ type: "cardsToBottom", data: evt.data });
             },
           },
           sendCardsToDeckTop: {
             actions: (ctx, evt) => {
-              if (evt.type !== "sendCardsToDeckTop") return ctx;
               ctx.deckArea.send({ type: "cardsToTop", data: evt.data });
             },
           },
@@ -125,17 +114,17 @@ export const PtcgSimulatorMachine = createMachine(
   {
     actions: {
       spawnMachines: assign({
-        handArea: () => spawn(handsAreaMachine()),
-        sideArea: () => spawn(sideAreaMachine()),
-        trushArea: () => spawn(trushAreaMachine()),
-        lostArea: () => spawn(lostAreaMachine()),
-        stadiumArea: () => spawn(stadiumAreaMachine()),
+        handArea: () => spawn(handsAreaMachine),
+        sideArea: () => spawn(sideAreaMachine),
+        trushArea: () => spawn(trushAreaMachine),
+        lostArea: () => spawn(lostAreaMachine),
+        stadiumArea: () => spawn(stadiumAreaMachine),
+        battleArea: () => spawn(pokemonAreaMachine, "battleArea"),
         benchAreas: () => {
-          return Array.from({ length: 5 }, (_, _i) =>
-            spawn(pokemonAreaMachine())
+          return Array.from({ length: 5 }, (_, i) =>
+            spawn(pokemonAreaMachine, `benchArea-${i}`)
           );
         },
-        battleArea: () => spawn(pokemonAreaMachine()),
         deckArea: ({ deckArea }, evt) => {
           if (evt.type !== "done.invoke.simulator.searchingDeck:invocation[0]")
             return deckArea;
