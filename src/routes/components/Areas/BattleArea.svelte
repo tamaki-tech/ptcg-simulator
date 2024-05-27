@@ -30,7 +30,7 @@
     <div>
       <ButtonGroup size="xs">
         <Button outline size="xs" color="light" class="max-h-1">
-          デッキに戻す
+          手札に戻す
         </Button>
         <Button outline size="xs" color="light" class="max-h-1">
           トラッシュ
