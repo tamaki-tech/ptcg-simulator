@@ -4,6 +4,7 @@
   import { flip } from "svelte/animate";
   import type { ActorRefFrom } from "xstate";
   import type { pokemonAreaMachine } from "../../machines/pokemonAreaMachine";
+  import { addToast } from "../../toast";
   import DamageCounter from "./components/DamageCounter.svelte";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
@@ -18,6 +19,26 @@
 
   const handleDragAndDrop = (e: any) => {
     pokemonArea.send({ type: "assignCards", data: e.detail.items });
+  };
+
+  const trushAllCards = () => {
+    pokemonArea.send({ type: "trushAllCards" });
+    addToast(`ベンチ${index + 1}のカードを全てトラッシュしました`);
+  };
+
+  const trushCard = (id: string) => {
+    pokemonArea.send({ type: "trushCard", id });
+    addToast("カードをトラッシュしました");
+  };
+
+  const sendCardToTop = (id: string) => {
+    pokemonArea.send({ type: "sendCardToTop", id });
+    addToast("カードをデッキ上に送りました");
+  };
+
+  const sendCardToBottom = (id: string) => {
+    pokemonArea.send({ type: "sendCardToBottom", id });
+    addToast("カードをデッキ下に送りました");
   };
 </script>
 
@@ -40,9 +61,19 @@
       size="xs"
       color="light"
       class="max-h-1"
-      on:click={() => dispatch("replacePokemon")}>バトル</Button
+      on:click={() => dispatch("replacePokemon")}
     >
-    <Button outline size="xs" color="light" class="max-h-1">トラッシュ</Button>
+      バトル
+    </Button>
+    <Button
+      outline
+      size="xs"
+      color="light"
+      class="max-h-1"
+      on:click={trushAllCards}
+    >
+      トラッシュ
+    </Button>
   </ButtonGroup>
 
   <div class="py-4">
@@ -56,14 +87,26 @@
         <div class="col-span-1 -mx-6 -my-0" animate:flip={{ duration: 100 }}>
           <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false}>
             <svelte:fragment slot="modalFooterMenu">
-              <Button>トラッシュする</Button>
-              <Button>デッキボトムに戻す</Button>
-              <Button>デッキトップに戻す</Button>
+              <Button on:click={() => trushCard(card.id)}>
+                トラッシュする
+              </Button>
+              <Button on:click={() => sendCardToBottom(card.id)}>
+                デッキボトムに戻す
+              </Button>
+              <Button on:click={() => sendCardToTop(card.id)}>
+                デッキトップに戻す
+              </Button>
             </svelte:fragment>
             <svelte:fragment slot="dropDownMenu">
-              <DropdownItem>トラッシュする</DropdownItem>
-              <DropdownItem>デッキボトムに戻す</DropdownItem>
-              <DropdownItem>デッキトップに戻す</DropdownItem>
+              <DropdownItem on:click={() => trushCard(card.id)}>
+                トラッシュする
+              </DropdownItem>
+              <DropdownItem on:click={() => sendCardToBottom(card.id)}>
+                デッキボトムに戻す
+              </DropdownItem>
+              <DropdownItem on:click={() => sendCardToTop(card.id)}>
+                デッキトップに戻す
+              </DropdownItem>
             </svelte:fragment>
           </PokemonCard>
         </div>

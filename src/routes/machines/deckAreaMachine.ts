@@ -63,7 +63,7 @@ export const deckAreaMachine = (context: Context) =>
           cardsToBottom: {
             actions: assign({
               deck: ({ deck }, { data }) => {
-                const result = shuffleArray(data);
+                const result = data.length > 1 ? shuffleArray(data) : data;
                 return { ...deck, cards: [...result, ...deck.cards] };
               },
             }),
@@ -71,7 +71,7 @@ export const deckAreaMachine = (context: Context) =>
           cardsToTop: {
             actions: assign({
               deck: ({ deck }, { data }) => {
-                const result = shuffleArray(data);
+                const result = data.length > 1 ? shuffleArray(data) : data;
                 return { ...deck, cards: [...deck.cards, ...result] };
               },
             }),
