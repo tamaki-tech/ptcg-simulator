@@ -1,5 +1,6 @@
 import type { Card } from "$lib/type";
-import { assign, createMachine, type ActorRefFrom } from "xstate";
+import { findCardById } from "$lib/utils/arrayUtils";
+import { assign, createMachine, sendParent, type ActorRefFrom } from "xstate";
 
 interface Context {
   cards: Card[];
@@ -9,7 +10,11 @@ interface Context {
 type Events =
   | { type: "assignCards"; data: Card[] }
   | { type: "addDamege" }
-  | { type: "subDamage" };
+  | { type: "subDamage" }
+  | { type: "trushAllCards" }
+  | { type: "trushCard"; id: string }
+  | { type: "sendCardToTop"; id: string }
+  | { type: "sendCardToBottom"; id: string };
 
 export const pokemonAreaMachine = createMachine(
   {
@@ -42,6 +47,30 @@ export const pokemonAreaMachine = createMachine(
             actions: assign({
               damage: ({ damage }) => damage - 10,
             }),
+          },
+          trushAllCards: {
+            actions: sendParent(({ cards }) => ({
+              type: "sendCardToTrush",
+              data: cards.splice(0),
+            })),
+          },
+          trushCard: {
+            actions: sendParent(({ cards }, { id }) => ({
+              type: "sendCardToTrush",
+              data: findCardById(cards, id),
+            })),
+          },
+          sendCardToTop: {
+            actions: sendParent(({ cards }, { id }) => ({
+              type: "sendCardsToDeckTop",
+              data: findCardById(cards, id),
+            })),
+          },
+          sendCardToBottom: {
+            actions: sendParent(({ cards }, { id }) => ({
+              type: "sendCardsToDeckBottom",
+              data: findCardById(cards, id),
+            })),
           },
         },
       },
