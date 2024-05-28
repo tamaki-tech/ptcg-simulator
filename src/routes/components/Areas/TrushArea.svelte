@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Button, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
-  import type { TrushAreaMachineType } from "../../machines/trushAreaMachine";
+  import type { ActorRefFrom } from "xstate";
+  import type { trushAreaMachine } from "../../machines/trushAreaMachine";
   import CardListModal from "./components/CardListModal.svelte";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
-  export let trushArea: TrushAreaMachineType;
+  export let trushArea: ActorRefFrom<typeof trushAreaMachine>;
 
   let openModal = false;
 

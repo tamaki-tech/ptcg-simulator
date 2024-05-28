@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Button, ButtonGroup, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
-  import type { HandsAreaMachineType } from "../../machines/handsAreaMachine";
+  import type { ActorRefFrom } from "xstate";
+  import type { handsAreaMachine } from "../../machines/handsAreaMachine";
   import { addToast } from "../../toast";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
-  export let handArea: HandsAreaMachineType;
+  export let handArea: ActorRefFrom<typeof handsAreaMachine>;
 
   $: cards = $handArea.context.cards;
 

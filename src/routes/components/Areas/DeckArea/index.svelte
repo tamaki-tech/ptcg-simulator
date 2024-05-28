@@ -1,12 +1,13 @@
 <script lang="ts">
   import pokeUraImg from "$lib/images/poke_ura.jpg";
   import { Button, Card } from "flowbite-svelte";
-  import type { DeckAreaMachineType } from "../../../machines/deckAreaMachine";
+  import type { ActorRefFrom } from "xstate";
+  import type { deckAreaMachine } from "../../../machines/deckAreaMachine";
   import { addToast } from "../../../toast";
   import CardListModal from "../components/CardListModal.svelte";
   import DeckTopNumberModal from "./DeckTopNumberModal.svelte";
 
-  export let deckArea: DeckAreaMachineType;
+  export let deckArea: ActorRefFrom<typeof deckAreaMachine>;
 
   let openDeckListModal = false;
   let openDeckTopListModal = false;
