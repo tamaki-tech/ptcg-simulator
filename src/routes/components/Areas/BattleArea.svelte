@@ -92,7 +92,7 @@
     </Button>
   </section>
 
-  <section class="py-4 px-32">
+  <section class="pb-4 pt-8 px-32">
     <DragAndDropSection
       cards={$pokemonArea.context.cards}
       class="grid-cols-{col}"

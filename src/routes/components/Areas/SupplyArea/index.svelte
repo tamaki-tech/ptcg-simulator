@@ -5,10 +5,10 @@
 </script>
 
 <Card size="xs" padding="sm">
-  <div class="p-4">
+  <div class="p-1">
     <Vstar />
   </div>
-  <div class="p-4">
+  <div class="p-1">
     <Coin />
   </div>
 </Card>
