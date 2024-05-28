@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Button, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
-  import type { LostAreaMachineType } from "../../machines/lostAreaMachine";
+  import type { ActorRefFrom } from "xstate";
+  import type { lostAreaMachine } from "../../machines/lostAreaMachine";
   import CardListModal from "./components/CardListModal.svelte";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
-  export let lostArea: LostAreaMachineType;
+  export let lostArea: ActorRefFrom<typeof lostAreaMachine>;
 
   let openModal = false;
 

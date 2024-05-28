@@ -1,5 +1,5 @@
 import type { Card } from "$lib/type";
-import { assign, createMachine, type ActorRefFrom } from "xstate";
+import { assign, createMachine } from "xstate";
 
 interface Context {
   cards: Card[];

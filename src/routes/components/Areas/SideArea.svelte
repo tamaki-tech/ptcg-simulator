@@ -7,11 +7,12 @@
     Toggle,
   } from "flowbite-svelte";
   import { flip } from "svelte/animate";
-  import type { SideAreaMachineType } from "../../machines/sideAreaMachine";
+  import type { ActorRefFrom } from "xstate";
+  import type { sideAreaMachine } from "../../machines/sideAreaMachine";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
-  export let sideArea: SideAreaMachineType;
+  export let sideArea: ActorRefFrom<typeof sideAreaMachine>;
 
   let checked = true;
 

@@ -1,11 +1,12 @@
 <script lang="ts">
   import { Button, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
-  import type { StadiumAreaMachineType } from "../../machines/stadiumAreaMachine";
+  import type { ActorRefFrom } from "xstate";
+  import type { stadiumAreaMachine } from "../../machines/stadiumAreaMachine";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
-  export let stadiumArea: StadiumAreaMachineType;
+  export let stadiumArea: ActorRefFrom<typeof stadiumAreaMachine>;
 
   $: cards = $stadiumArea.context.cards;
   $: col = cards.length > 2 ? 2 : cards.length;

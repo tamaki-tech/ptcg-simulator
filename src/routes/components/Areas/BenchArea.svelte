@@ -2,14 +2,15 @@
   import { Button, ButtonGroup, Card, DropdownItem } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
   import { flip } from "svelte/animate";
-  import type { PokemonAreaMachineType } from "../../machines/pokemonAreaMachine";
+  import type { ActorRefFrom } from "xstate";
+  import type { pokemonAreaMachine } from "../../machines/pokemonAreaMachine";
   import DamageCounter from "./components/DamageCounter.svelte";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
   const dispatch = createEventDispatcher<{ replacePokemon: void }>();
 
-  export let pokemonArea: PokemonAreaMachineType;
+  export let pokemonArea: ActorRefFrom<typeof pokemonAreaMachine>;
   export let index: number;
 
   $: cards = $pokemonArea.context.cards;
