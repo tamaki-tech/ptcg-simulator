@@ -9,6 +9,7 @@
   import { flip } from "svelte/animate";
   import type { ActorRefFrom } from "xstate";
   import type { sideAreaMachine } from "../../machines/sideAreaMachine";
+  import { addToast } from "../../toast";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
@@ -20,6 +21,21 @@
 
   const handleDragAndDrop = (e: any) => {
     sideArea.send({ type: "assignCards", data: e.detail.items });
+  };
+
+  const pickSideCard = (id: string) => {
+    sideArea.send({ type: "pickSideCard", id });
+    addToast("サイドを１枚取りました");
+  };
+
+  const pickOneSide = () => {
+    sideArea.send({ type: "pickOneSide" });
+    addToast("サイドを１枚取りました");
+  };
+
+  const pickTwoSide = () => {
+    sideArea.send({ type: "pickTwoSide" });
+    addToast("サイドを2枚取りました");
   };
 </script>
 
@@ -37,8 +53,26 @@
 
   <div class="flex flex-col justify-center items-center py-2">
     <ButtonGroup size="xs">
-      <Button outline size="xs" color="light" class="max-h-1">1枚</Button>
-      <Button outline size="xs" color="light" class="max-h-1">2枚</Button>
+      <Button
+        disabled={!$sideArea.can("pickOneSide")}
+        outline
+        size="xs"
+        color="light"
+        class="max-h-1"
+        on:click={pickOneSide}
+      >
+        1枚
+      </Button>
+      <Button
+        outline
+        disabled={!$sideArea.can("pickTwoSide")}
+        size="xs"
+        color="light"
+        class="max-h-1"
+        on:click={pickTwoSide}
+      >
+        2枚
+      </Button>
     </ButtonGroup>
   </div>
 
@@ -56,12 +90,14 @@
           bind:isReverse={checked}
         >
           <svelte:fragment slot="modalFooterMenu">
-            <Button>サイドを取る</Button>
-            <Button>裏表を逆にする</Button>
+            <Button on:click={() => pickSideCard(card.id)}>サイドを取る</Button>
           </svelte:fragment>
           <svelte:fragment slot="dropDownMenu">
-            <DropdownItem>サイドを取る</DropdownItem>
-            <DropdownItem>裏表を逆にする</DropdownItem>
+            <DropdownItem on:click={() => pickSideCard(card.id)}>
+              サイドを取る
+            </DropdownItem>
+            <!-- TODO 検討　-->
+            <!-- <DropdownItem>裏表を逆にする</DropdownItem> -->
           </svelte:fragment>
         </PokemonCard>
       </div>
