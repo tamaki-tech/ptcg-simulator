@@ -63,14 +63,16 @@ export const deckAreaMachine = (context: Context) =>
           cardsToBottom: {
             actions: assign({
               deck: ({ deck }, { data }) => {
-                return { ...deck, cards: [shuffleArray(data), ...deck.cards] };
+                const result = shuffleArray(data);
+                return { ...deck, cards: [...result, ...deck.cards] };
               },
             }),
           },
           cardsToTop: {
             actions: assign({
               deck: ({ deck }, { data }) => {
-                return { ...deck, cards: [...deck.cards, shuffleArray(data)] };
+                const result = shuffleArray(data);
+                return { ...deck, cards: [...deck.cards, ...result] };
               },
             }),
           },

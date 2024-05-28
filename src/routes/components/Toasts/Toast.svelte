@@ -27,7 +27,6 @@
   <Toast
     color="green"
     class="fixed"
-    dismissable={false}
     transition={slide}
     position="top-right"
     bind:open

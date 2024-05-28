@@ -26,7 +26,7 @@ export const addToast = (message: string) => {
     timeout: 3000,
   };
   // Push the toast to the top of the list of toasts
-  toasts.update((all) => [{ ...defaults }, ...all]);
+  toasts.update((all) => [...all, { ...defaults }]);
 
   // If toast is dismissible, dismiss it after "timeout" amount of time.
 };
