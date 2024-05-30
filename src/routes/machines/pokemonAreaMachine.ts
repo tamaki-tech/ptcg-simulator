@@ -12,6 +12,7 @@ type Events =
   | { type: "addDamege" }
   | { type: "subDamage" }
   | { type: "trushAllCards" }
+  | { type: "sendAllCardToHand" }
   | { type: "trushCard"; id: string }
   | { type: "sendCardToTop"; id: string }
   | { type: "sendCardToBottom"; id: string };
@@ -51,6 +52,12 @@ export const pokemonAreaMachine = createMachine(
           trushAllCards: {
             actions: sendParent(({ cards }) => ({
               type: "sendCardToTrush",
+              data: cards.splice(0),
+            })),
+          },
+          sendAllCardToHand: {
+            actions: sendParent(({ cards }) => ({
+              type: "sendCardToHands",
               data: cards.splice(0),
             })),
           },

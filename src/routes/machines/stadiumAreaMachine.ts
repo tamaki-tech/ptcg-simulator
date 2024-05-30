@@ -1,5 +1,7 @@
 import type { Card } from "$lib/type";
-import { assign, createMachine, type ActorRefFrom } from "xstate";
+import { findCardById } from "$lib/utils/arrayUtils";
+import { assign, createMachine } from "xstate";
+import { sendParent } from "xstate/lib/actions";
 
 interface Context {
   cards: Card[];
@@ -7,7 +9,9 @@ interface Context {
 
 type Events =
   | { type: "dealCards"; data: Card }
-  | { type: "assignCards"; data: Card[] };
+  | { type: "assignCards"; data: Card[] }
+  | { type: "sendAllCardToTrush" }
+  | { type: "trushCard"; id: string };
 
 export const stadiumAreaMachine = createMachine({
   id: "stadiumArea",
@@ -32,6 +36,18 @@ export const stadiumAreaMachine = createMachine({
           actions: assign({
             cards: (_, evt) => evt.data,
           }),
+        },
+        sendAllCardToTrush: {
+          actions: sendParent(({ cards }) => ({
+            type: "sendCardToTrush",
+            data: cards.splice(0),
+          })),
+        },
+        trushCard: {
+          actions: sendParent(({ cards }, { id }) => ({
+            type: "sendCardToTrush",
+            data: findCardById(cards, id),
+          })),
         },
       },
     },

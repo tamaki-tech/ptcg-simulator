@@ -1,11 +1,5 @@
 import type { Card, DeckSearchResponse } from "$lib/type";
-import {
-  assign,
-  createMachine,
-  sendTo,
-  spawn,
-  type ActorRefFrom,
-} from "xstate";
+import { assign, createMachine, spawn, type ActorRefFrom } from "xstate";
 import { client } from "$lib/apiClient";
 import { deckAreaMachine } from "./deckAreaMachine";
 import { handsAreaMachine } from "./handsAreaMachine";
@@ -119,7 +113,7 @@ export const PtcgSimulatorMachine = createMachine(
         trushArea: () => spawn(trushAreaMachine),
         lostArea: () => spawn(lostAreaMachine),
         stadiumArea: () => spawn(stadiumAreaMachine),
-        battleArea: () => spawn(pokemonAreaMachine, "battleArea"),
+        battleArea: () => spawn(pokemonAreaMachine),
         benchAreas: () => {
           return Array.from({ length: 5 }, (_, i) =>
             spawn(pokemonAreaMachine, `benchArea-${i}`)

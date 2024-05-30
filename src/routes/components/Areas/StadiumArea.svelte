@@ -3,6 +3,7 @@
   import { flip } from "svelte/animate";
   import type { ActorRefFrom } from "xstate";
   import type { stadiumAreaMachine } from "../../machines/stadiumAreaMachine";
+  import { addToast } from "../../toast";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
@@ -14,6 +15,16 @@
   const handleDragAndDrop = (e: any) => {
     stadiumArea.send({ type: "assignCards", data: e.detail.items });
   };
+
+  const sendAllCardToTrush = () => {
+    stadiumArea.send({ type: "sendAllCardToTrush" });
+    addToast("スタジアムエリアのカードをトラッシュしました");
+  };
+
+  const trushCard = (id: string) => {
+    stadiumArea.send({ type: "trushCard", id });
+    addToast("カードをトラッシュしました");
+  };
 </script>
 
 <Card size="xs" padding="sm">
@@ -22,7 +33,13 @@
       Stadium
     </h5>
     <div>
-      <Button outline size="xs" color="light" class="max-h-1 w-50">
+      <Button
+        outline
+        size="xs"
+        color="light"
+        class="max-h-1 w-50"
+        on:click={sendAllCardToTrush}
+      >
         トラッシュ
       </Button>
     </div>
@@ -39,10 +56,14 @@
         <div class="col-span-1 -mx-6 -my-0" animate:flip={{ duration: 100 }}>
           <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false}>
             <svelte:fragment slot="modalFooterMenu">
-              <Button>トラッシュする</Button>
+              <Button on:click={() => trushCard(card.id)}>
+                トラッシュする
+              </Button>
             </svelte:fragment>
             <svelte:fragment slot="dropDownMenu">
-              <DropdownItem>トラッシュする</DropdownItem>
+              <DropdownItem on:click={() => trushCard(card.id)}>
+                トラッシュする
+              </DropdownItem>
             </svelte:fragment>
           </PokemonCard>
         </div>
