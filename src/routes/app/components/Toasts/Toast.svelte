@@ -22,8 +22,7 @@
   });
 </script>
 
-<!-- TODO z-indexこれで本当に大丈夫か？ -->
-<div class="flex gap-10" style="z-index: 100;">
+<div>
   <Toast
     color="green"
     class="fixed"

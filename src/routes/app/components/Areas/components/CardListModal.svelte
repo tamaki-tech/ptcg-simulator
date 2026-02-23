@@ -5,7 +5,7 @@
   import DeckListCard from "./PokemonCards/DeckListCard.svelte";
 
   const dispatch = createEventDispatcher<{
-    trushCard: { id: string };
+    trashCard: { id: string };
     pickCard: { id: string };
   }>();
 
@@ -34,8 +34,8 @@
     decrementDeckTop(index);
   };
 
-  const trushCard = (e: any, index: number) => {
-    dispatch("trushCard", { id: e.detail.id });
+  const trashCard = (e: any, index: number) => {
+    dispatch("trashCard", { id: e.detail.id });
     decrementDeckTop(index);
   };
 </script>
@@ -51,7 +51,7 @@
 >
   <div
     role="none"
-    class="grid grid-cols-10 gap-1"
+    class="grid grid-cols-5 sm:grid-cols-10 gap-1"
     on:contextmenu|preventDefault
   >
     {#each items ?? [] as item, i}
@@ -60,7 +60,7 @@
         {item}
         {isReverse}
         on:pickCard={(e) => pickCard(e, i)}
-        on:trushCard={(e) => trushCard(e, i)}
+        on:trashCard={(e) => trashCard(e, i)}
       />
     {/each}
   </div>

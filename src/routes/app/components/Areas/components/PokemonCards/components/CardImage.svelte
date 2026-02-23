@@ -16,8 +16,8 @@
   on:contextmenu|preventDefault={() => dispatch("contextmenu")}
 >
   {#if reverse}
-    <img src={pokeUraImg} alt="pokeUraImage" class="h-24 min-w-18" />
+    <img src={pokeUraImg} alt="pokeUraImage" class="h-24 w-auto" />
   {:else}
-    <img src={item.src} alt={item.alt} class="h-24 min-w-18" />
+    <img src={item.src} alt={item.alt} class="h-24 w-auto" />
   {/if}
 </div>

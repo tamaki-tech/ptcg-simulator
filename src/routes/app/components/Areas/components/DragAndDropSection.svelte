@@ -8,8 +8,7 @@
 </script>
 
 <section
-  class="grid px-8 {className} place-items-center"
-  style="min-height: 96px;"
+  class="grid px-8 min-h-24 {className} place-items-center"
   use:dndzone={{
     items: cards,
     flipDurationMs: 100,

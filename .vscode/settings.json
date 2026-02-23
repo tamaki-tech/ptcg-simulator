@@ -2,5 +2,6 @@
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode",
     "editor.codeActionsOnSave": ["source.organizeImports"]
-  }
+  },
+  "cSpell.words": ["Ptcg"]
 }

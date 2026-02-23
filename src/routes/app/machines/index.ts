@@ -5,7 +5,7 @@ import { deckAreaMachine } from "./deckAreaMachine";
 import { handsAreaMachine } from "./handsAreaMachine";
 import { sideAreaMachine } from "./sideAreaMachine";
 import { pokemonAreaMachine } from "./pokemonAreaMachine";
-import { trushAreaMachine } from "./trushAreaMachine";
+import { trashAreaMachine } from "./trashAreaMachine";
 import { lostAreaMachine } from "./lostAreaMachine";
 import { stadiumAreaMachine } from "./stadiumAreaMachine";
 
@@ -16,7 +16,7 @@ interface Context {
   sideArea: ActorRefFrom<typeof sideAreaMachine>;
   benchAreas: ActorRefFrom<typeof pokemonAreaMachine>[];
   battleArea: ActorRefFrom<typeof pokemonAreaMachine>;
-  trushArea: ActorRefFrom<typeof trushAreaMachine>;
+  trashArea: ActorRefFrom<typeof trashAreaMachine>;
   lostArea: ActorRefFrom<typeof lostAreaMachine>;
   stadiumArea: ActorRefFrom<typeof stadiumAreaMachine>;
 }
@@ -25,7 +25,7 @@ type Event =
   | { type: "searchDeck"; code: string }
   | { type: "sendCardToHands"; data: Card[] }
   | { type: "sendCardToSide"; data: Card[] }
-  | { type: "sendCardToTrush"; data: Card[] }
+  | { type: "sendCardToTrash"; data: Card[] }
   | { type: "replacePokemon"; benchNumber: number }
   | { type: "sendCardsToDeckBottom"; data: Card[] }
   | { type: "sendCardsToDeckTop"; data: Card[] }
@@ -52,7 +52,7 @@ export const PtcgSimulatorMachine = createMachine(
       searchingDeck: {
         tags: "loading",
         invoke: {
-          src: "serchDeck",
+          src: "searchDeck",
           onDone: {
             target: "ready",
             actions: [
@@ -77,9 +77,9 @@ export const PtcgSimulatorMachine = createMachine(
               ctx.sideArea.send({ type: "dealCards", data: evt.data });
             },
           },
-          sendCardToTrush: {
+          sendCardToTrash: {
             actions: (ctx, evt) => {
-              ctx.trushArea.send({ type: "dealCards", data: evt.data });
+              ctx.trashArea.send({ type: "dealCards", data: evt.data });
             },
           },
           sendCardsToDeckBottom: {
@@ -110,13 +110,13 @@ export const PtcgSimulatorMachine = createMachine(
       spawnMachines: assign({
         handArea: () => spawn(handsAreaMachine),
         sideArea: () => spawn(sideAreaMachine),
-        trushArea: () => spawn(trushAreaMachine),
+        trashArea: () => spawn(trashAreaMachine),
         lostArea: () => spawn(lostAreaMachine),
         stadiumArea: () => spawn(stadiumAreaMachine),
         battleArea: () => spawn(pokemonAreaMachine),
         benchAreas: () => {
           return Array.from({ length: 5 }, (_, i) =>
-            spawn(pokemonAreaMachine, `benchArea-${i}`)
+            spawn(pokemonAreaMachine, `benchArea-${i}`),
           );
         },
         deckArea: ({ deckArea }, evt) => {
@@ -137,12 +137,12 @@ export const PtcgSimulatorMachine = createMachine(
       },
     },
     services: {
-      serchDeck: async (_, evt) => {
+      searchDeck: async (_, evt) => {
         if (evt.type !== "searchDeck") return;
         return (
           await client.deck.search.$get({ query: { code: evt.code } })
         ).json();
       },
     },
-  }
+  },
 );

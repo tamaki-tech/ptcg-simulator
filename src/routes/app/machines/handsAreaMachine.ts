@@ -10,8 +10,8 @@ interface Context {
 type Events =
   | { type: "dealCards"; data: Card[] }
   | { type: "assignCards"; data: Card[] }
-  | { type: "trushCard"; id: string }
-  | { type: "trushAllHand" }
+  | { type: "trashCard"; id: string }
+  | { type: "trashAllHand" }
   | { type: "sendToDeckBottom" }
   | { type: "sendToDeckTop" };
 
@@ -39,15 +39,15 @@ export const handsAreaMachine = createMachine({
             cards: (_, evt) => evt.data,
           }),
         },
-        trushCard: {
+        trashCard: {
           actions: sendParent(({ cards }, { id }) => ({
-            type: "sendCardToTrush",
+            type: "sendCardToTrash",
             data: findCardById(cards, id),
           })),
         },
-        trushAllHand: {
+        trashAllHand: {
           actions: sendParent(({ cards }) => ({
-            type: "sendCardToTrush",
+            type: "sendCardToTrash",
             data: cards.splice(0),
           })),
         },

@@ -27,7 +27,7 @@
 
     <!-- TODO use zod validation -->
     <Button
-      class="w-full1"
+      class="w-full"
       disabled={loading || !value}
       on:click={() => dispatch("click", value)}
     >

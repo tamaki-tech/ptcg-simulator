@@ -11,8 +11,8 @@ type Events =
   | { type: "assignCards"; data: Card[] }
   | { type: "pickCard"; id: string };
 
-export const trushAreaMachine = createMachine({
-  id: "trushArea",
+export const trashAreaMachine = createMachine({
+  id: "trashArea",
   predictableActionArguments: true,
   schema: {
     context: {} as Context,

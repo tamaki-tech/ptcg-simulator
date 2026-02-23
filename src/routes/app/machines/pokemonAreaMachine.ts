@@ -9,11 +9,11 @@ interface Context {
 
 type Events =
   | { type: "assignCards"; data: Card[] }
-  | { type: "addDamege" }
+  | { type: "addDamage" }
   | { type: "subDamage" }
-  | { type: "trushAllCards" }
+  | { type: "trashAllCards" }
   | { type: "sendAllCardToHand" }
-  | { type: "trushCard"; id: string }
+  | { type: "trashCard"; id: string }
   | { type: "sendCardToTop"; id: string }
   | { type: "sendCardToBottom"; id: string };
 
@@ -38,7 +38,7 @@ export const pokemonAreaMachine = createMachine(
               cards: (_, evt) => evt.data,
             }),
           },
-          addDamege: {
+          addDamage: {
             actions: assign({
               damage: ({ damage }) => damage + 10,
             }),
@@ -49,9 +49,9 @@ export const pokemonAreaMachine = createMachine(
               damage: ({ damage }) => damage - 10,
             }),
           },
-          trushAllCards: {
+          trashAllCards: {
             actions: sendParent(({ cards }) => ({
-              type: "sendCardToTrush",
+              type: "sendCardToTrash",
               data: cards.splice(0),
             })),
           },
@@ -61,9 +61,9 @@ export const pokemonAreaMachine = createMachine(
               data: cards.splice(0),
             })),
           },
-          trushCard: {
+          trashCard: {
             actions: sendParent(({ cards }, { id }) => ({
-              type: "sendCardToTrush",
+              type: "sendCardToTrash",
               data: findCardById(cards, id),
             })),
           },

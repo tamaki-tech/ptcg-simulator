@@ -16,13 +16,13 @@
     stadiumArea.send({ type: "assignCards", data: e.detail.items });
   };
 
-  const sendAllCardToTrush = () => {
-    stadiumArea.send({ type: "sendAllCardToTrush" });
+  const sendAllCardToTrash = () => {
+    stadiumArea.send({ type: "sendAllCardToTrash" });
     addToast("スタジアムエリアのカードをトラッシュしました");
   };
 
-  const trushCard = (id: string) => {
-    stadiumArea.send({ type: "trushCard", id });
+  const trashCard = (id: string) => {
+    stadiumArea.send({ type: "trashCard", id });
     addToast("カードをトラッシュしました");
   };
 </script>
@@ -37,8 +37,8 @@
         outline
         size="xs"
         color="light"
-        class="max-h-1 w-50"
-        on:click={sendAllCardToTrush}
+        class="max-h-1 w-full"
+        on:click={sendAllCardToTrash}
       >
         トラッシュ
       </Button>
@@ -56,12 +56,12 @@
         <div class="col-span-1 -mx-6 -my-0" animate:flip={{ duration: 100 }}>
           <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false}>
             <svelte:fragment slot="modalFooterMenu">
-              <Button on:click={() => trushCard(card.id)}>
+              <Button on:click={() => trashCard(card.id)}>
                 トラッシュする
               </Button>
             </svelte:fragment>
             <svelte:fragment slot="dropDownMenu">
-              <DropdownItem on:click={() => trushCard(card.id)}>
+              <DropdownItem on:click={() => trashCard(card.id)}>
                 トラッシュする
               </DropdownItem>
             </svelte:fragment>

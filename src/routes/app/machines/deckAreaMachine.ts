@@ -14,7 +14,7 @@ type Events =
   | { type: "shuffleDeck" }
   | { type: "cardsToBottom"; data: Card[] }
   | { type: "cardsToTop"; data: Card[] }
-  | { type: "trushCard"; id: string };
+  | { type: "trashCard"; id: string };
 
 export const deckAreaMachine = (context: Context) =>
   createMachine({
@@ -41,9 +41,9 @@ export const deckAreaMachine = (context: Context) =>
               data: deck.cards.splice(-(quantity ?? 1)),
             })),
           },
-          trushCard: {
+          trashCard: {
             actions: sendParent(({ deck }, { id }) => ({
-              type: "sendCardToTrush",
+              type: "sendCardToTrash",
               data: findCardById(deck.cards, id),
             })),
           },

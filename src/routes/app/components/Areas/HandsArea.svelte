@@ -15,13 +15,13 @@
     handArea.send({ type: "assignCards", data: e.detail.items });
   };
 
-  const trushCard = (id: string) => {
-    handArea.send({ type: "trushCard", id });
+  const trashCard = (id: string) => {
+    handArea.send({ type: "trashCard", id });
     addToast("手札を１枚トラッシュしました");
   };
 
-  const trushAllHand = () => {
-    handArea.send({ type: "trushAllHand" });
+  const trashAllHand = () => {
+    handArea.send({ type: "trashAllHand" });
     addToast("手札を全てトラッシュしました");
   };
 
@@ -64,7 +64,7 @@
             color="light"
             class="max-h-1"
             disabled={cards.length <= 0}
-            on:click={trushAllHand}
+            on:click={trashAllHand}
           >
             トラッシュ
           </Button>
@@ -102,12 +102,12 @@
       <div class="-mx-6" animate:flip={{ duration: 100 }}>
         <PokemonCard item={{ src: card.url, alt: card.id }} opacity={false}>
           <svelte:fragment slot="modalFooterMenu">
-            <Button on:click={() => trushCard(card.id)}>トラッシュする</Button>
+            <Button on:click={() => trashCard(card.id)}>トラッシュする</Button>
             <Button>デッキボトムに戻す</Button>
             <Button>デッキトップに戻す</Button>
           </svelte:fragment>
           <svelte:fragment slot="dropDownMenu">
-            <DropdownItem on:click={() => trushCard(card.id)}>
+            <DropdownItem on:click={() => trashCard(card.id)}>
               トラッシュする
             </DropdownItem>
             <DropdownItem>デッキボトムに戻す</DropdownItem>

@@ -11,7 +11,7 @@
 
   const dispatch = createEventDispatcher<{
     pickCard: { id: string };
-    trushCard: { id: string };
+    trashCard: { id: string };
   }>();
 
   export let item: { id: string; src: string; alt?: string };
@@ -25,8 +25,8 @@
     dispatch("pickCard", { id: item.id });
   };
 
-  const trushCard = () => {
-    dispatch("trushCard", { id: item.id });
+  const trashCard = () => {
+    dispatch("trashCard", { id: item.id });
   };
 </script>
 
@@ -34,7 +34,7 @@
   <svelte:fragment slot="footer">
     <Button color="alternative">閉じる</Button>
     <Button on:click={pickCard}>手札に加える</Button>
-    <Button on:click={trushCard}>トラッシュに送る</Button>
+    <Button on:click={trashCard}>トラッシュに送る</Button>
   </svelte:fragment>
 </CardViewModal>
 
@@ -63,7 +63,7 @@
   </DropdownItem>
   <DropdownItem
     on:click={() => {
-      trushCard();
+      trashCard();
       openDropDownMenu = false;
     }}
   >

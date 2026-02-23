@@ -2,27 +2,27 @@
   import { Button, Card, DropdownItem } from "flowbite-svelte";
   import { flip } from "svelte/animate";
   import type { ActorRefFrom } from "xstate";
-  import type { trushAreaMachine } from "../../machines/trushAreaMachine";
+  import type { trashAreaMachine } from "../../machines/trashAreaMachine";
   import CardListModal from "./components/CardListModal.svelte";
   import DragAndDropSection from "./components/DragAndDropSection.svelte";
   import PokemonCard from "./components/PokemonCards/PokemonCard.svelte";
 
-  export let trushArea: ActorRefFrom<typeof trushAreaMachine>;
+  export let trashArea: ActorRefFrom<typeof trashAreaMachine>;
 
   let openModal = false;
 
-  $: cards = $trushArea.context.cards;
+  $: cards = $trashArea.context.cards;
 
   const handleDragAndDrop = (e: any) => {
-    trushArea.send({ type: "assignCards", data: e.detail.items });
+    trashArea.send({ type: "assignCards", data: e.detail.items });
   };
 
   const pickCard = (id: string) => {
-    trushArea.send({ type: "pickCard", id: id });
+    trashArea.send({ type: "pickCard", id: id });
   };
 </script>
 
-<CardListModal title={`Trush (${cards.length})`} {cards} bind:openModal>
+<CardListModal title={`Trash (${cards.length})`} {cards} bind:openModal>
   <Button on:click={() => (openModal = false)} color="alternative">
     閉じる
   </Button>
@@ -32,7 +32,7 @@
   <div class="flex justify-between">
     <div>
       <h5 class="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-        Trush ({cards.length})
+        Trash ({cards.length})
       </h5>
     </div>
     <div>
