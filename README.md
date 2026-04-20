@@ -12,7 +12,7 @@
 
 <!-- TODO: Cloudflare Workers にデプロイ後、公開 URL をここに差し込む -->
 
-- 公開デモ: **（デプロイ後に URL を記載）**
+- 公開デモ: <https://develop.ptcg-simulator.pages.dev/>
 - ローカル起動: `pnpm install && pnpm dev`
 
 ---
